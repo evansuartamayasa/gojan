@@ -1,6 +1,18 @@
 import './style.css';
 
-import { SEED_PRODUCTS } from './products.js';
-import { initLanding } from './ui.js';
+import { apiRequest } from './api.js';
+import { showCatalogError, initLanding } from './ui.js';
 
-initLanding(SEED_PRODUCTS);
+async function loadCatalog() {
+  try {
+    const { products } = await apiRequest('/api/products');
+    if (!Array.isArray(products)) throw new Error('Respons katalog dari server tidak valid.');
+    initLanding(products);
+  } catch (error) {
+    showCatalogError(
+      error instanceof Error ? error.message : 'Katalog gagal dimuat. Coba muat ulang halaman.',
+    );
+  }
+}
+
+loadCatalog();

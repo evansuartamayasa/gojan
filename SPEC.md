@@ -1,27 +1,27 @@
 # SPEC — GoJan
 
-Aplikasi katalog produk UMKM makanan/minuman berbasis web. Satu perangkat dipakai bersama oleh calon pembeli (mode katalog) dan pengelola toko (mode dashboard demo).
+Aplikasi katalog produk UMKM makanan/minuman berbasis web dengan katalog publik dan pengelolaan toko terautentikasi.
 
 | Atribut | Nilai |
 |---|---|
 | Nama produk | GoJan |
-| Jenis | Aplikasi web statis (single page) |
-| Stack | Vite + JavaScript vanilla (ES modules), HTML, CSS |
-| Backend | Tidak ada |
-| Penyimpanan | `localStorage` peramban |
+| Jenis | Aplikasi web dengan Node.js API dan frontend Vite |
+| Stack | Node.js/Express, Supabase Auth, PostgreSQL, Vite + JavaScript vanilla |
+| Backend | Node.js same-origin API/BFF |
+| Penyimpanan | PostgreSQL; localStorage hanya sumber impor manual pemilik |
 | Target pengerjaan | Latihan 1 hari (± 8 jam efektif) |
-| Status dokumen | Final untuk MVP |
+| Status dokumen | Spesifikasi awal; arsitektur migrasi terbaru ada di README.md |
 
-**Catatan repositori:** berkas `index.html`, `css/`, `js/`, `CATATAN.md`, dan `UI-SPEC.md` yang ada saat ini milik latihan landing page **BersihKilat** (jasa housekeeping) dan **tidak** menjadi bagian aplikasi ini. Implementasi GoJan akan dibuat sebagai proyek Vite terpisah di subfolder `GoJan/` agar tidak menimpa pekerjaan lama. Keputusan lokasi ini tidak memengaruhi perilaku yang dispesifikasikan di bawah.
+> **Pembaruan arsitektur:** bagian dokumen lama yang menyebut aplikasi offline/localStorage tanpa akun telah digantikan oleh migrasi backend. Kode sekarang memakai Node.js API, Supabase Auth, sesi cookie server, PostgreSQL/RLS, dan halaman impor pemilik nyata. [README.md](./README.md) adalah panduan setup dan kontrak arsitektur terbaru. CRUD tersedia melalui API; UI dashboard penuh di luar cakupan perubahan migrasi ini.
 
 ---
 
 ## 1. Tujuan
 
-1. Menyediakan katalog produk UMKM yang bisa dibuka tanpa instalasi, tanpa akun, dan tanpa koneksi ke server.
+1. Menyediakan katalog publik produk UMKM yang bisa dibuka tanpa akun pembeli.
 2. Memungkinkan calon pembeli menemukan produk dengan cepat (cari, filter kategori, urutkan) lalu menghubungi penjual lewat WhatsApp dengan pesan yang sudah terisi.
-3. Memungkinkan pengelola toko mengelola katalog (tambah, lihat, ubah, hapus) lewat dashboard demo dan melihat ringkasan persediaan, dengan data yang tetap ada setelah halaman dimuat ulang.
-4. Menjadi latihan satu hari yang utuh: satu alur data (state → render → simpan), tanpa framework, tanpa backend.
+3. Memungkinkan pengelola terautentikasi mengelola katalog lewat API dengan role dan isolasi toko di server.
+4. Menyimpan perubahan di PostgreSQL dan menyediakan alur impor data lokal yang eksplisit serta dapat diulang dengan aman.
 
 **Kriteria keberhasilan latihan:** seluruh acceptance criteria di §9 lulus secara manual dalam satu kali sesi pemeriksaan, tanpa error di konsol.
 
@@ -34,9 +34,9 @@ Aplikasi katalog produk UMKM makanan/minuman berbasis web. Satu perangkat dipaka
 | **Calon pembeli** — pelanggan UMKM, 18–45 tahun, mobile-first | Lihat produk, tahu harga & stok, cari yang spesifik, langsung chat penjual | Ponsel, koneksi lambat, tidak mau daftar akun |
 | **Pengelola toko** — pemilik UMKM, bukan teknis | Menambah produk baru, memperbaiki harga/stok, menghapus produk yang tidak dijual, melihat total stok | Ponsel atau laptop, satu perangkat yang sama dengan pembeli |
 
-**Model peran:** tidak ada autentikasi dan **tidak ada login palsu** (tidak ada layar kata sandi, tidak ada tombol "masuk" yang hanya kosmetik). Pindah peran dilakukan lewat tab navigasi "Katalog" / "Dashboard" yang selalu terlihat. Dashboard diberi label jelas **"Demo pengelola — data tersimpan di perangkat ini"** agar tidak disalahartikan sebagai sistem toko sungguhan.
+**Model peran:** pembeli dapat membaca katalog publik tanpa akun. Pemilik masuk melalui Supabase Auth; Node.js membuat sesi opaque dalam cookie HttpOnly/Secure/SameSite dan memeriksa membership/role pada setiap operasi. Tidak ada login palsu. Peran `owner`, `editor`, dan `viewer` ditegakkan server-side.
 
-**Asumsi:** satu perangkat, satu peramban, satu pengguna aktif pada satu waktu. Tidak ada sinkronisasi antar perangkat.
+**Asumsi:** store GoJan dipilih lewat konfigurasi server. Data tidak dibagikan antar pemilik; isolasi tenant diterapkan oleh query API dan PostgreSQL RLS.
 
 ---
 
@@ -61,7 +61,9 @@ Prioritas: **P0** = wajib untuk dianggap selesai; **P1** = dikerjakan bila waktu
 | F-11 | Tombol pesan WhatsApp | Satu tombol per kartu. Bila stok > 0: "Pesan via WhatsApp". Bila stok = 0: "Tanya ketersediaan". Membuka `https://wa.me/<nomor>?text=<pesan ter-encode>` di tab baru (`rel="noopener noreferrer"`). Pesan memuat nama produk, harga, dan jumlah 1 (MVP tanpa keranjang). | P0 |
 | F-12 | Nomor WhatsApp terpusat | Nomor disimpan di satu konstanta konfigurasi (`CONFIG.WA_NUMBER`, placeholder `6281234567890`). Tidak ada nomor tersebar di banyak tempat. | P0 |
 
-### 3.2 Dashboard demo (pengelola)
+### 3.2 Pengelolaan katalog (pengelola)
+
+API menyediakan create/read/update/delete dengan role server-side. Halaman `/owner.html` menjalankan login nyata dan impor localStorage; dashboard visual CRUD/KPI belum termasuk dalam implementasi migrasi ini.
 
 | ID | Fitur | Detail | Prio |
 |---|---|---|---|
@@ -80,16 +82,16 @@ Prioritas: **P0** = wajib untuk dianggap selesai; **P1** = dikerjakan bila waktu
 
 | ID | Fitur | Detail | Prio |
 |---|---|---|---|
-| F-23 | Persistensi localStorage | Setiap mutasi berhasil langsung ditulis ke `GoJan:v1:products`. Reload halaman mempertahankan data. | P0 |
-| F-24 | Pemulihan data rusak | JSON tidak valid / bukan array / skema tidak dikenali → pakai data contoh, tampilkan banner "Data tersimpan tidak dapat dibaca, katalog dimuat ulang dari data contoh", dan jangan menimpa data lama sebelum pengguna menekan "Muat ulang data contoh". | P0 |
-| F-25 | Peringatan kuota penuh | Bila `localStorage.setItem` melempar `QuotaExceededError`, tampilkan galat yang bisa ditutup, pertahankan state di memori, jangan mengklaim "tersimpan". | P0 |
-| F-26 | Sinkron antar tab | Mendengarkan event `storage` dan memuat ulang state bila kunci berubah di tab lain. | P1 |
+| F-23 | Persistensi PostgreSQL | Perubahan katalog disimpan API ke PostgreSQL; reload mengambil data server. | P0 |
+| F-24 | Kegagalan backend | Katalog menampilkan error bila API/database gagal; tidak mengklaim data contoh sebagai data tersimpan dan tidak menulis fallback diam-diam. | P0 |
+| F-25 | Impor localStorage eksplisit | Pemilik terautentikasi meninjau lalu mengonfirmasi impor; validasi dilakukan server, ID lama idempotent, salinan lokal tidak dihapus otomatis. | P0 |
+| F-26 | Sinkronisasi lintas perangkat | Perubahan tersimpan server menjadi sumber data bersama sesuai akses tenant. | P0 |
 
 ---
 
 ## 4. Data Model
 
-Satu entitas: **Product**. Disimpan sebagai array JSON di satu kunci localStorage.
+Entitas utama: **Store**, **Membership**, **Product**, **Session**, dan **AuditEvent**. Product memiliki `store_id`; detail skema, RLS, dan indeks ada di [migrasi PostgreSQL](./server/migrations/001_initial.sql).
 
 ```json
 {
@@ -197,13 +199,13 @@ Validasi dijalankan saat submit (dan saat blur untuk field yang sudah disentuh).
 | NFR-06 | Aksesibilitas | Setiap input punya `<label for>`; tombol ikon punya `aria-label`; hasil pencarian & toast punya `aria-live="polite"`. | Inspeksi DOM |
 | NFR-07 | Responsif | Tidak ada scroll horizontal pada lebar 320, 360, 390, 768, 1024, 1440 px. | Resize / device toolbar |
 | NFR-08 | Responsif | Target sentuh ≥ 44×44 px untuk tombol, chip, dan aksi tabel. | Inspeksi |
-| NFR-09 | Ketahanan | Reload dan tutup-buka tab mempertahankan data. | Uji manual |
-| NFR-10 | Ketahanan | Data localStorage rusak tidak membuat halaman blank; muncul banner dan katalog memakai data contoh. | Ubah nilai kunci lewat DevTools |
-| NFR-11 | Kapasitas | Ukuran data tersimpan < 1 MB untuk 100 produk berisi deskripsi maksimum. | DevTools Application |
+| NFR-09 | Ketahanan | Reload mengambil data katalog server; backend menjadi sumber kebenaran. | Uji API + browser |
+| NFR-10 | Ketahanan | Backend tidak tersedia ditampilkan sebagai error; tidak ada fallback sukses palsu ke seed. | Matikan API/database |
+| NFR-11 | Kapasitas | Impor dibatasi 100 produk per batch dan data divalidasi server. | Uji API |
 | NFR-12 | Kompatibilitas | Chrome, Edge, Firefox, Safari versi stabil terbaru (2 versi terakhir). | Uji minimal Chrome + Firefox |
 | NFR-13 | Kualitas kode | Tanpa error/warning di konsol; `npm run build` sukses. | Konsol + terminal |
-| NFR-14 | Privasi | Tidak ada analytics, cookie, atau permintaan jaringan selain berkas lokal dan `wa.me` saat diklik. | DevTools Network |
-| NFR-15 | Kejujuran UI | Label demo terlihat di dashboard; tidak ada fitur yang tampak aktif padahal tidak berfungsi. | Inspeksi visual |
+| NFR-14 | Privasi | Tidak ada analytics; sesi hanya cookie HttpOnly, database dan Auth diakses melalui Node API. | DevTools Network |
+| NFR-15 | Kejujuran UI | UI tidak mengklaim data tersimpan jika API gagal; login harus memakai Supabase Auth nyata. | Uji kegagalan API |
 
 ---
 
@@ -229,13 +231,11 @@ Validasi dijalankan saat submit (dan saat blur untuk field yang sudah disentuh).
 
 Tidak dikerjakan pada MVP ini:
 
-1. Backend, API, database, atau sinkronisasi antar perangkat.
-2. Autentikasi, akun, peran berbasis hak akses, dan **login palsu** dalam bentuk apa pun.
-3. Keranjang, checkout, pembayaran, ongkos kirim, dan pengurangan stok otomatis saat pesanan dikirim.
+1. Keranjang, checkout, payment gateway, ongkos kirim, dan pengurangan stok otomatis saat pesanan dikirim.
 4. Manajemen pesanan (status, riwayat, pelanggan) — dashboard hanya mengelola produk.
 5. Unggah foto dari perangkat atau kamera; hanya path lokal/placeholder.
 6. CRUD kategori terpisah (kategori mengikuti data produk).
-7. Impor/ekspor CSV/JSON, cetak, dan backup manual.
+7. Impor/ekspor CSV/JSON umum dan backup manual di luar alur impor localStorage.
 8. Multi-bahasa, mode gelap, PWA/offline install, notifikasi push.
 9. Unit/E2E test otomatis; verifikasi MVP dilakukan manual sesuai §9.
 10. Deployment, domain, SEO lanjutan, dan optimasi gambar tingkat lanjut.

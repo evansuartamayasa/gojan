@@ -1,6 +1,6 @@
 # TASKS — GoJan
 
-Rincian pekerjaan untuk membangun aplikasi katalog produk UMKM **GoJan** sesuai `SPEC.md`. Setiap tugas punya kriteria penerimaan yang bisa diperiksa di layar dan daftar berkas yang kemungkinan berubah. Dokumen ini tidak mengubah kode.
+Rencana awal pembangunan aplikasi katalog produk UMKM **GoJan**. Setelah migrasi backend, rencana milestone lokal di bawah ini bersifat historis; arsitektur dan setup berjalan dijelaskan dalam [README.md](./README.md).
 
 | Atribut | Nilai |
 |---|---|
@@ -8,7 +8,7 @@ Rincian pekerjaan untuk membangun aplikasi katalog produk UMKM **GoJan** sesuai 
 | Sumber visual | `UI-SPEC.md` — **hanya** token warna, tipografi, radius, focus ring, dan aturan target sentuh 44 px |
 | Lokasi kode | `GoJan/` (proyek Vite terpisah; tidak menyentuh berkas BersihKilat) |
 | Total estimasi MVP | ± 7 jam 45 menit untuk M0–M9 |
-| Status | Rencana, belum ada implementasi |
+| Status | Rencana awal; backend Supabase/Node telah ditambahkan |
 
 ## Catatan sumber daya desain
 

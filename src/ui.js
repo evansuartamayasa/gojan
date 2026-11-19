@@ -18,6 +18,17 @@ export function formatRupiah(value) {
   return `Rp${rupiah.format(Number(value) || 0)}`;
 }
 
+export function showCatalogError(message) {
+  const grid = document.getElementById('catalog-root');
+  const count = document.getElementById('catalog-count');
+  if (!grid || !count) return;
+
+  const status = el('p', 'empty-state', message);
+  status.setAttribute('role', 'alert');
+  grid.replaceChildren(status);
+  count.textContent = '';
+}
+
 export function stockStatus(stok) {
   if (stok === 0) return { key: 'habis', label: 'Habis' };
   if (stok <= CONFIG.LOW_STOCK_THRESHOLD) {

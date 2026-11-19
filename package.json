@@ -5,12 +5,21 @@
   "type": "module",
   "description": "Katalog produk UMKM GoJan — Vite + JavaScript vanilla",
   "scripts": {
-    "dev": "vite",
+    "dev": "node server/index.js",
+    "start": "node server/index.js",
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test"
   },
   "devDependencies": {
+    "supertest": "^7.3.2",
     "vite": "^8.3.8"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.5",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
   }
 }

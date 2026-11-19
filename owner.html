@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Masuk ke GoJan untuk mengelola katalog produk." />
+    <title>Kelola katalog — GoJan</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Langsung ke konten utama</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="GoJan — beranda">
+          <span class="brand-mark" aria-hidden="true">G</span>
+          <span>GoJan</span>
+        </a>
+        <a class="btn btn--ghost btn--small" href="/">Kembali ke katalog</a>
+      </div>
+    </header>
+
+    <main id="main" class="owner-main">
+      <section class="owner-panel" aria-labelledby="owner-title">
+        <p class="eyebrow">Area pemilik</p>
+        <h1 id="owner-title">Kelola katalog</h1>
+        <p class="owner-intro">
+          Masuk menggunakan akun GoJan yang telah dibuat oleh pengelola Supabase.
+          Data lokal hanya diimpor setelah Anda meninjau dan mengonfirmasi.
+        </p>
+
+        <form id="login-form" class="owner-form" hidden>
+          <label>
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="username" required maxlength="254" />
+          </label>
+          <label>
+            <span>Kata sandi</span>
+            <input name="password" type="password" autocomplete="current-password" required maxlength="1024" />
+          </label>
+          <button class="btn btn--primary" type="submit">Masuk dengan akun GoJan</button>
+        </form>
+
+        <section id="owner-content" hidden aria-labelledby="import-title">
+          <div class="owner-session">
+            <p id="owner-identity"></p>
+            <button id="logout-button" class="btn btn--ghost btn--small" type="button">Keluar</button>
+          </div>
+          <div id="import-panel" hidden>
+            <h2 id="import-title">Impor data perangkat ini</h2>
+            <p>
+              Periksa produk yang tersimpan di browser ini. Impor tidak menghapus
+              atau mengubah salinan lokal.
+            </p>
+            <button id="inspect-button" class="btn btn--ghost" type="button">
+              Tinjau data lokal
+            </button>
+            <div id="import-preview" class="import-preview" hidden></div>
+            <button id="import-button" class="btn btn--primary" type="button" disabled>
+              Impor produk yang ditinjau
+            </button>
+          </div>
+        </section>
+
+        <p id="owner-status" class="owner-status" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+    <script type="module" src="/src/owner.js"></script>
+  </body>
+</html>
