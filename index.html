@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BersihKilat — Jasa Housekeeping Profesional untuk Rumah & Kantor</title>
+  <meta
+    name="description"
+    content="BersihKilat menyediakan jasa housekeeping profesional: daily cleaning, deep cleaning, dan pembersihan kantor/apartemen. Tim terlatih, harga transparan, pesan cepat via WhatsApp."
+  />
+  <meta name="theme-color" content="#0d9488" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230d9488'/%3E%3Cpath d='M38 32c0-8 5-13 12-13s12 5 12 13c0 9-4 12-4 18h-16c0-6-4-9-4-18z' fill='%23fff'/%3E%3Cpath d='M42 56h16l-3 8H45z' fill='%23fff'/%3E%3Ccircle cx='50' cy='72' r='5' fill='%23fff'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#beranda">Langsung ke konten utama</a>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-wrap">
+      <a href="#beranda" class="brand" aria-label="BersihKilat, kembali ke beranda">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3z" />
+            <path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2z" />
+            <path d="M5 14l.6 1.7L7.3 16l-1.7.6L5 18.3l-.6-1.7L2.7 16l1.7-.3L5 14z" />
+          </svg>
+        </span>
+        <span class="brand-name">Bersih<span>Kilat</span></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="#beranda" class="nav-link active">Beranda</a></li>
+          <li><a href="#layanan" class="nav-link">Layanan</a></li>
+          <li><a href="#harga" class="nav-link">Harga</a></li>
+          <li><a href="#testimoni" class="nav-link">Testimoni</a></li>
+        </ul>
+        <a href="#pesan" class="btn btn-primary nav-cta">Pesan Sekarang</a>
+      </nav>
+
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-expanded="false"
+        aria-controls="mainNav"
+        aria-label="Buka menu navigasi"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="beranda">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Dipercaya 2.500+ rumah &amp; kantor
+          </span>
+
+          <h1>
+            Rumah bersih maksimal,
+            <span class="text-gradient">hidup lebih ringan.</span>
+          </h1>
+
+          <p class="hero-sub">
+            Jasa housekeeping profesional untuk rumah, apartemen, dan kantor.
+            Tim terlatih, peralatan lengkap, dan harga transparan — tinggal pesan,
+            sisanya kami yang urus.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#pesan" class="btn btn-primary btn-lg">
+              Pesan Sekarang
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a href="#layanan" class="btn btn-ghost btn-lg">Lihat Layanan</a>
+          </div>
+
+          <dl class="hero-stats">
+            <div>
+              <dt>Pelanggan puas</dt>
+              <dd>2.500+</dd>
+            </div>
+            <div>
+              <dt>Rating rata-rata</dt>
+              <dd>4,9<span>/5</span></dd>
+            </div>
+            <div>
+              <dt>Pengalaman</dt>
+              <dd>6 tahun</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-visual reveal" aria-hidden="true">
+          <div class="visual-glow"></div>
+
+          <div class="visual-card visual-main">
+            <div class="visual-room">
+              <svg viewBox="0 0 240 180" fill="none">
+                <path d="M40 150V78l80-48 80 48v72H40z" fill="#e6fbf7" />
+                <path d="M120 34l84 50" stroke="#99f6e4" stroke-width="4" stroke-linecap="round" />
+                <path d="M40 84L120 34l80 50" stroke="#0d9488" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                <rect x="72" y="86" width="38" height="30" rx="4" fill="#fff" stroke="#5eead4" stroke-width="3" />
+                <path d="M91 86v30M72 101h38" stroke="#5eead4" stroke-width="3" />
+                <rect x="140" y="92" width="40" height="58" rx="5" fill="#14b8a6" />
+                <circle cx="170" cy="122" r="3" fill="#ccfbf1" />
+                <path d="M24 150h192" stroke="#0d9488" stroke-width="5" stroke-linecap="round" />
+                <path d="M150 48l2.4 6.6L159 57l-6.6 2.4L150 66l-2.4-6.6L141 57l6.6-2.4L150 48z" fill="#0d9488" />
+                <path d="M196 30l1.8 4.9L203 36.7l-5.2 1.8L196 43l-1.8-4.5-5.2-1.8 5.2-1.8L196 30z" fill="#2dd4bf" />
+              </svg>
+            </div>
+            <div class="visual-meta">
+              <span class="tag tag-teal">Deep Cleaning</span>
+              <p>Apartemen 2 kamar · selesai</p>
+            </div>
+          </div>
+
+          <div class="visual-card visual-badge badge-rating">
+            <div class="stars" aria-hidden="true">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <strong>4,9 / 5</strong>
+            <small>dari 1.200+ ulasan</small>
+          </div>
+
+          <div class="visual-card visual-badge badge-speed">
+            <span class="badge-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
+            </span>
+            <div>
+              <strong>Respons &lt; 15 menit</strong>
+              <small>konfirmasi via WhatsApp</small>
+            </div>
+          </div>
+
+          <div class="visual-card visual-badge badge-staff">
+            <span class="avatar-stack">
+              <span class="avatar a1">RA</span>
+              <span class="avatar a2">DN</span>
+              <span class="avatar a3">SW</span>
+            </span>
+            <div>
+              <strong>Tim terlatih &amp; tersertifikasi</strong>
+              <small>background check ketat</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-wave" aria-hidden="true"></div>
+    </section>
+
+    <!-- ================= LAYANAN ================= -->
+    <section class="section" id="layanan">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow eyebrow-plain">Layanan Kami</span>
+          <h2>Pilih yang paling pas dengan kebutuhan Anda</h2>
+          <p>
+            Setiap layanan dikerjakan oleh tim terlatih dengan peralatan dan bahan
+            pembersih ramah lingkungan yang aman untuk keluarga.
+          </p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11.5L12 4l9 7.5" />
+                <path d="M5 10.5V20h14v-9.5" />
+                <path d="M10 20v-5h4v5" />
+              </svg>
+            </div>
+            <span class="service-tag">Paling sering dipesan</span>
+            <h3>Daily Cleaning</h3>
+            <p>
+              Perawatan rutin harian untuk menjaga rumah tetap rapi: menyapu,
+              mengepel, membereskan kamar, dan membersihkan area basah.
+            </p>
+            <ul class="service-list">
+              <li>Sapu, pel, &amp; dusting seluruh ruangan</li>
+              <li>Bersihkan kamar mandi &amp; dapur</li>
+              <li>Ganti sprei &amp; buang sampah</li>
+            </ul>
+            <div class="service-foot">
+              <span class="price-from">Mulai <strong>Rp175.000</strong></span>
+              <button class="link-btn" data-select-service="daily">
+                Pilih layanan
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" />
+                <path d="M18 15l.9 2.4L21 18.3l-2.1.9L18 21.5l-.9-2.3-2.1-.9 2.1-.9.9-2.4z" />
+                <path d="M5 14l.7 1.8 1.8.7-1.8.7L5 19l-.7-1.8-1.8-.7 1.8-.7L5 14z" />
+              </svg>
+            </div>
+            <span class="service-tag">Paling menyeluruh</span>
+            <h3>Deep Cleaning</h3>
+            <p>
+              Pembersihan menyeluruh hingga ke sudut tersembunyi, cocok untuk
+              musim liburan, pindahan, atau setelah renovasi.
+            </p>
+            <ul class="service-list">
+              <li>Semua area Daily Cleaning</li>
+              <li>Kaca, kusen, &amp; ventilasi</li>
+              <li>Desinfeksi &amp; hilangkan noda membandel</li>
+            </ul>
+            <div class="service-foot">
+              <span class="price-from">Mulai <strong>Rp375.000</strong></span>
+              <button class="link-btn" data-select-service="deep">
+                Pilih layanan
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <path d="M3 9h18" />
+                <path d="M8 4v5M16 4v5" />
+                <path d="M7 13h4v4H7z" />
+                <path d="M15 13h2M15 17h2" />
+              </svg>
+            </div>
+            <span class="service-tag">Untuk bisnis</span>
+            <h3>Kebersihan Kantor &amp; Apartemen</h3>
+            <p>
+              Layanan terjadwal untuk kantor, ruang kerja bersama, dan apartemen
+              dengan kebutuhan kebersihan area komunal.
+            </p>
+            <ul class="service-list">
+              <li>Jadwal harian atau mingguan</li>
+              <li>Lobby, ruang meeting &amp; pantry</li>
+              <li>Laporan kebersihan tiap kunjungan</li>
+            </ul>
+            <div class="service-foot">
+              <span class="price-from">Mulai <strong>Rp450.000</strong></span>
+              <button class="link-btn" data-select-service="office">
+                Pilih layanan
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HARGA ================= -->
+    <section class="section section-tint" id="harga">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow eyebrow-plain">Paket Harga</span>
+          <h2>Harga transparan, tanpa biaya tersembunyi</h2>
+          <p>
+            Semua paket sudah termasuk peralatan, bahan pembersih, dan asuransi
+            kerusakan. Batalkan atau jadwalkan ulang tanpa biaya.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card reveal">
+            <h3>Paket Reguler</h3>
+            <p class="price-desc">Perawatan rutin untuk hunian berukuran standar.</p>
+            <p class="price">
+              <span class="currency">Rp</span>175<span class="suffix">rb</span>
+              <small>/ kunjungan</small>
+            </p>
+            <p class="price-note">± 2–3 jam · 1 tim (2 orang)</p>
+            <ul class="feature-list">
+              <li class="ok">Pembersihan area utama</li>
+              <li class="ok">Kamar mandi &amp; dapur</li>
+              <li class="ok">Buang sampah &amp; rapikan tempat tidur</li>
+              <li class="no">Kaca &amp; ventilasi</li>
+              <li class="no">Desinfeksi menyeluruh</li>
+            </ul>
+            <a href="#pesan" class="btn btn-outline btn-block" data-select-service="daily">Pilih Reguler</a>
+          </article>
+
+          <article class="price-card price-card-featured reveal">
+            <span class="popular-badge">Paling populer</span>
+            <h3>Paket Lengkap</h3>
+            <p class="price-desc">Deep cleaning menyeluruh untuk rumah Anda.</p>
+            <p class="price">
+              <span class="currency">Rp</span>375<span class="suffix">rb</span>
+              <small>/ kunjungan</small>
+            </p>
+            <p class="price-note">± 4–5 jam · 1 tim (3 orang)</p>
+            <ul class="feature-list">
+              <li class="ok">Semua fitur Paket Reguler</li>
+              <li class="ok">Kaca, kusen &amp; ventilasi</li>
+              <li class="ok">Desinfeksi seluruh ruangan</li>
+              <li class="ok">Bersihkan jok sofa &amp; karpet ringan</li>
+              <li class="ok">Garansi kebersihan 24 jam</li>
+            </ul>
+            <a href="#pesan" class="btn btn-primary btn-block" data-select-service="deep">Pilih Lengkap</a>
+          </article>
+
+          <article class="price-card reveal">
+            <h3>Paket Berlangganan</h3>
+            <p class="price-desc">Kunjungan rutin dengan harga lebih hemat.</p>
+            <p class="price">
+              <span class="currency">Rp</span>1.200<span class="suffix">rb</span>
+              <small>/ bulan</small>
+            </p>
+            <p class="price-note">4× kunjungan · tim tetap</p>
+            <ul class="feature-list">
+              <li class="ok">4 kunjungan Daily Cleaning</li>
+              <li class="ok">Tim yang sama tiap kunjungan</li>
+              <li class="ok">Jadwal fleksibel</li>
+              <li class="ok">Prioritas &amp; gratis 1 deep clean ringan</li>
+              <li class="ok">Hemat hingga 20%</li>
+            </ul>
+            <a href="#pesan" class="btn btn-outline btn-block" data-select-service="daily">Pilih Berlangganan</a>
+          </article>
+        </div>
+
+        <p class="pricing-foot reveal">
+          Butuh penawaran khusus untuk kantor atau gedung?
+          <a href="#pesan">Minta penawaran</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= FORM PEMESANAN ================= -->
+    <section class="section" id="pesan">
+      <div class="container">
+        <div class="booking-shell reveal">
+          <aside class="booking-aside">
+            <span class="eyebrow eyebrow-light">Pemesanan Cepat</span>
+            <h2>Pesan dalam 2 menit, konfirmasi langsung</h2>
+            <p>
+              Isi detail singkat di samping. Estimasi biaya muncul otomatis dan
+              pesanan diteruskan ke WhatsApp kami untuk dikonfirmasi.
+            </p>
+
+            <ul class="booking-perks">
+              <li>
+                <span class="perk-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                </span>
+                Estimasi harga jelas sebelum bayar
+              </li>
+              <li>
+                <span class="perk-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                </span>
+                Jadwal bisa diubah tanpa biaya
+              </li>
+              <li>
+                <span class="perk-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                </span>
+                Tim terlatih &amp; peralatan lengkap
+              </li>
+              <li>
+                <span class="perk-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                </span>
+                Garansi kebersihan 24 jam
+              </li>
+            </ul>
+
+            <div class="aside-contact">
+              <span>Butuh bantuan?</span>
+              <a href="tel:+6281234567890">+62 812-3456-7890</a>
+              <small>Setiap hari, 07.00–21.00 WIB</small>
+            </div>
+          </aside>
+
+          <div class="booking-form-wrap">
+            <h3 class="form-title">Formulir Pemesanan</h3>
+            <p class="form-sub">* Wajib diisi. Data Anda hanya digunakan untuk pesanan ini.</p>
+
+            <form id="bookingForm" novalidate>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Nama lengkap <span aria-hidden="true">*</span></label>
+                  <input type="text" id="name" name="name" autocomplete="name" placeholder="Contoh: Rina Anggraini" required />
+                  <p class="error-msg" data-error-for="name"></p>
+                </div>
+
+                <div class="field">
+                  <label for="phone">Nomor WhatsApp <span aria-hidden="true">*</span></label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="numeric" placeholder="0812 3456 7890" required />
+                  <p class="error-msg" data-error-for="phone"></p>
+                </div>
+
+                <div class="field">
+                  <label for="service">Jenis layanan <span aria-hidden="true">*</span></label>
+                  <select id="service" name="service" required>
+                    <option value="daily" data-base="175000" data-per-room="35000">Daily Cleaning — Rp175.000</option>
+                    <option value="deep" data-base="375000" data-per-room="55000">Deep Cleaning — Rp375.000</option>
+                    <option value="office" data-base="450000" data-per-room="60000">Kebersihan Kantor/Apartemen — Rp450.000</option>
+                  </select>
+                  <p class="error-msg" data-error-for="service"></p>
+                </div>
+
+                <div class="field">
+                  <label for="size">Luas ruangan / jumlah kamar <span aria-hidden="true">*</span></label>
+                  <select id="size" name="size" required>
+                    <option value="1" data-extra="0">1 kamar / studio (≤ 40 m²)</option>
+                    <option value="2" data-extra="1" selected>2 kamar (41–70 m²)</option>
+                    <option value="3" data-extra="2">3 kamar (71–100 m²)</option>
+                    <option value="4" data-extra="3">4 kamar (101–140 m²)</option>
+                    <option value="5" data-extra="4">5+ kamar / &gt; 140 m²</option>
+                  </select>
+                  <p class="error-msg" data-error-for="size"></p>
+                </div>
+
+                <div class="field">
+                  <label for="date">Tanggal kunjungan <span aria-hidden="true">*</span></label>
+                  <input type="date" id="date" name="date" required />
+                  <p class="error-msg" data-error-for="date"></p>
+                </div>
+
+                <div class="field">
+                  <label for="time">Waktu kunjungan <span aria-hidden="true">*</span></label>
+                  <select id="time" name="time" required>
+                    <option value="08.00–10.00">Pagi · 08.00–10.00</option>
+                    <option value="10.00–12.00">Pagi · 10.00–12.00</option>
+                    <option value="13.00–15.00" selected>Siang · 13.00–15.00</option>
+                    <option value="15.00–17.00">Sore · 15.00–17.00</option>
+                  </select>
+                  <p class="error-msg" data-error-for="time"></p>
+                </div>
+
+                <div class="field field-full">
+                  <label for="address">Alamat lengkap <span aria-hidden="true">*</span></label>
+                  <textarea id="address" name="address" rows="3" placeholder="Nama jalan, nomor rumah, kelurahan, kota — sertakan patokan bila perlu" required></textarea>
+                  <p class="error-msg" data-error-for="address"></p>
+                </div>
+              </div>
+
+              <div class="estimate" aria-live="polite">
+                <div class="estimate-row">
+                  <span id="estimateService">Daily Cleaning · 2 kamar</span>
+                  <strong id="estimateBase">Rp210.000</strong>
+                </div>
+                <div class="estimate-row estimate-sub">
+                  <span>Biaya layanan dasar</span>
+                  <span id="estimateDetail">Rp175.000 + 1 kamar tambahan</span>
+                </div>
+                <div class="estimate-total">
+                  <span>Estimasi total</span>
+                  <strong id="estimateTotal">Rp210.000</strong>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg btn-block submit-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.2c-.24.68-1.42 1.3-1.96 1.35-.54.05-1.06.24-3.6-.76s-4.14-3.6-4.27-3.77c-.13-.17-.9-1.2-.9-2.3 0-1.09.57-1.63.78-1.85.2-.22.44-.27.59-.27.15 0 .3 0 .43.01.14.01.32-.05.5.38.18.43.63 1.53.68 1.64.06.11.09.24.02.39-.07.15-.11.24-.22.37-.11.13-.24.3-.34.4-.11.11-.23.24-.1.46.13.22.57.94 1.23 1.53.85.76 1.56 1 1.78 1.11.22.11.35.09.48-.05.13-.14.55-.64.7-.86.15-.22.3-.18.5-.11.2.07 1.3.61 1.52.72.22.11.37.17.43.27.06.1.06.6-.18 1.28z" />
+                </svg>
+                Konfirmasi Pesanan via WhatsApp
+              </button>
+              <p class="form-foot">Estimasi final dikonfirmasi tim kami setelah cek lokasi &amp; kebutuhan.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONI ================= -->
+    <section class="section section-tint" id="testimoni">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow eyebrow-plain">Testimoni</span>
+          <h2>Kata mereka yang sudah mencoba</h2>
+          <p>Lebih dari 1.200 ulasan dengan rata-rata 4,9 dari 5 bintang.</p>
+        </div>
+
+        <div class="testimonial-grid">
+          <figure class="testi-card reveal">
+            <div class="stars" aria-label="Rating 5 dari 5">★★★★★</div>
+            <blockquote>
+              “Timnya datang tepat waktu dan sangat teliti. Dapur yang tadinya
+              lengket jadi kinclong, bahkan bagian bawah kompor ikut dibersihkan.”
+            </blockquote>
+            <figcaption>
+              <span class="avatar a1">RA</span>
+              <div>
+                <strong>Rina Anggraini</strong>
+                <small>Ibu rumah tangga · Jakarta Selatan</small>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="testi-card reveal">
+            <div class="stars" aria-label="Rating 5 dari 5">★★★★★</div>
+            <blockquote>
+              “Kami pakai paket berlangganan untuk kantor. Hasilnya konsisten,
+              timnya ramah, dan laporan kebersihannya rapi. Sangat membantu.”
+            </blockquote>
+            <figcaption>
+              <span class="avatar a2">DN</span>
+              <div>
+                <strong>Dimas Nugroho</strong>
+                <small>Office Manager · Jakarta Pusat</small>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="testi-card reveal">
+            <div class="stars" aria-label="Rating 5 dari 5">★★★★★</div>
+            <blockquote>
+              “Pesan lewat WhatsApp pagi, sore sudah bisa deep cleaning.
+              Estimasinya jelas dari awal, tidak ada biaya tambahan mendadak.”
+            </blockquote>
+            <figcaption>
+              <span class="avatar a3">SW</span>
+              <div>
+                <strong>Siti Wulandari</strong>
+                <small>Penghuni apartemen · Tangerang</small>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="trust-bar reveal" aria-label="Keunggulan layanan">
+          <div><strong>2.500+</strong><span>pelanggan aktif</span></div>
+          <div><strong>98%</strong><span>pelanggan mengulang</span></div>
+          <div><strong>24 jam</strong><span>garansi kebersihan</span></div>
+          <div><strong>100%</strong><span>tim terlatih</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#beranda" class="brand brand-light" aria-label="BersihKilat">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3z" />
+              <path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2z" />
+              <path d="M5 14l.6 1.7L7.3 16l-1.7.6L5 18.3l-.6-1.7L2.7 16l1.7-.3L5 14z" />
+            </svg>
+          </span>
+          <span class="brand-name">Bersih<span>Kilat</span></span>
+        </a>
+        <p>
+          Jasa housekeeping profesional untuk rumah, apartemen, dan kantor.
+          Bersih tanpa repot, setiap saat.
+        </p>
+        <div class="socials">
+          <a href="https://wa.me/6281234567890" target="_blank" rel="noopener" aria-label="WhatsApp BersihKilat">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.2c-.24.68-1.42 1.3-1.96 1.35-.54.05-1.06.24-3.6-.76s-4.14-3.6-4.27-3.77c-.13-.17-.9-1.2-.9-2.3 0-1.09.57-1.63.78-1.85.2-.22.44-.27.59-.27.15 0 .3 0 .43.01.14.01.32-.05.5.38.18.43.63 1.53.68 1.64.06.11.09.24.02.39-.07.15-.11.24-.22.37-.11.13-.24.3-.34.4-.11.11-.23.24-.1.46.13.22.57.94 1.23 1.53.85.76 1.56 1 1.78 1.11.22.11.35.09.48-.05.13-.14.55-.64.7-.86.15-.22.3-.18.5-.11.2.07 1.3.61 1.52.72.22.11.37.17.43.27.06.1.06.6-.18 1.28z" /></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram BersihKilat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
+          </a>
+          <a href="mailto:halo@bersihkilat.id" aria-label="Email BersihKilat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5L12 13l8.5-6.5" /></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Navigasi footer">
+        <h4>Navigasi</h4>
+        <ul>
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#layanan">Layanan</a></li>
+          <li><a href="#harga">Harga</a></li>
+          <li><a href="#testimoni">Testimoni</a></li>
+          <li><a href="#pesan">Pesan Sekarang</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <ul class="contact-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v2.2a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 011.1 3.2 2 2 0 013.1 1h2.2a2 2 0 012 1.7c.1 1 .4 2 .7 2.9a2 2 0 01-.5 2.1L6.6 8.7a16 16 0 006 6l1-1a2 2 0 012.1-.4c.9.3 1.9.6 2.9.7a2 2 0 011.7 2z" /></svg>
+            <a href="tel:+6281234567890">+62 812-3456-7890</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5L12 13l8.5-6.5" /></svg>
+            <a href="mailto:halo@bersihkilat.id">halo@bersihkilat.id</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1116 0z" /><circle cx="12" cy="10" r="3" /></svg>
+            <span>Jl. Melati No. 24, Kebayoran Baru,<br />Jakarta Selatan 12130</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Jam Operasional</h4>
+        <ul class="hours-list">
+          <li><span>Senin – Jumat</span><strong>07.00 – 21.00</strong></li>
+          <li><span>Sabtu</span><strong>08.00 – 20.00</strong></li>
+          <li><span>Minggu</span><strong>08.00 – 17.00</strong></li>
+          <li><span>Libur nasional</span><strong>Dengan janji</strong></li>
+        </ul>
+        <h4 class="area-title">Area Layanan</h4>
+        <p class="area-text">Jakarta, Depok, Tangerang, Bekasi, dan Bogor.</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© <span id="year">2026</span> BersihKilat. Semua hak dilindungi.</p>
+      <p class="footer-legal">
+        <a href="#">Kebijakan Privasi</a>
+        <span aria-hidden="true">·</span>
+        <a href="#">Syarat &amp; Ketentuan</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a
+    href="https://wa.me/6281234567890?text=Halo%20BersihKilat%2C%20saya%20ingin%20bertanya%20tentang%20layanan%20housekeeping."
+    class="wa-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Chat WhatsApp BersihKilat"
+  >
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.2c-.24.68-1.42 1.3-1.96 1.35-.54.05-1.06.24-3.6-.76s-4.14-3.6-4.27-3.77c-.13-.17-.9-1.2-.9-2.3 0-1.09.57-1.63.78-1.85.2-.22.44-.27.59-.27.15 0 .3 0 .43.01.14.01.32-.05.5.38.18.43.63 1.53.68 1.64.06.11.09.24.02.39-.07.15-.11.24-.22.37-.11.13-.24.3-.34.4-.11.11-.23.24-.1.46.13.22.57.94 1.23 1.53.85.76 1.56 1 1.78 1.11.22.11.35.09.48-.05.13-.14.55-.64.7-.86.15-.22.3-.18.5-.11.2.07 1.3.61 1.52.72.22.11.37.17.43.27.06.1.06.6-.18 1.28z" />
+    </svg>
+    <span class="wa-float-label">Chat kami</span>
+  </a>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
