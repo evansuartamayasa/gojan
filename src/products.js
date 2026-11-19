@@ -100,6 +100,34 @@ export const SEED_PRODUCTS = [
   },
 ];
 
+/**
+ * Mencari, memfilter, dan mengurutkan produk tanpa mengubah array sumber.
+ * sortBy menerima 'price-asc', 'price-desc', 'name-asc', atau 'default'.
+ */
+export function filterProducts(
+  products,
+  { searchTerm = '', category = 'Semua', sortBy = 'default' } = {},
+) {
+  const query = String(searchTerm).trim().toLocaleLowerCase('id');
+  const filtered = products.filter((product) => {
+    const matchesSearch = product.nama.toLocaleLowerCase('id').includes(query);
+    const matchesCategory = category === 'Semua' || product.kategori === category;
+    return matchesSearch && matchesCategory;
+  });
+
+  if (sortBy === 'price-asc') {
+    return filtered.sort((a, b) => a.harga - b.harga);
+  }
+  if (sortBy === 'price-desc') {
+    return filtered.sort((a, b) => b.harga - a.harga);
+  }
+  if (sortBy === 'name-asc') {
+    return filtered.sort((a, b) => a.nama.localeCompare(b.nama, 'id', { sensitivity: 'base' }));
+  }
+
+  return filtered;
+}
+
 /** Path gambar hanya boleh lokal (/img/...) dan berformat gambar yang didukung. */
 export function isValidImagePath(imageUrl) {
   if (imageUrl === undefined || imageUrl === null || imageUrl === '') return true;

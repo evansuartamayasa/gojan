@@ -1,9 +1,9 @@
 /**
- * Lapisan tampilan: membuat dan memperbarui DOM dari data produk.
+ * Lapisan tampilan landing page GoJan.
  * Semua teks produk dirender lewat textContent, bukan innerHTML.
  */
 
-import { CONFIG, isValidImagePath } from './products.js';
+import { CONFIG, filterProducts, isValidImagePath } from './products.js';
 
 const rupiah = new Intl.NumberFormat('id-ID', { maximumFractionDigits: 0 });
 
@@ -20,17 +20,36 @@ export function formatRupiah(value) {
 
 export function stockStatus(stok) {
   if (stok === 0) return { key: 'habis', label: 'Habis' };
-  if (stok <= CONFIG.LOW_STOCK_THRESHOLD) return { key: 'menipis', label: `Stok menipis: ${stok}` };
+  if (stok <= CONFIG.LOW_STOCK_THRESHOLD) {
+    return { key: 'menipis', label: `Stok menipis: ${stok}` };
+  }
   return { key: 'tersedia', label: `Stok: ${stok}` };
 }
 
-export function buildWaUrl(product) {
-  const harga = formatRupiah(product.harga);
-  const pesan =
-    product.stok > 0
-      ? `Halo, saya ingin memesan ${product.nama} (${harga}) sebanyak 1. Mohon konfirmasi ketersediaannya.`
-      : `Halo, saya ingin menanyakan ketersediaan ${product.nama} (${harga}). Mohon info kapan stok tersedia.`;
+export function buildWhatsAppUrl(nomor, produk) {
+  if (typeof nomor !== 'string' || !/^[1-9]\d{7,14}$/.test(nomor)) {
+    throw new Error('Nomor WhatsApp harus menggunakan format internasional tanpa tanda tambah.');
+  }
+  if (!produk || typeof produk.nama !== 'string') {
+    throw new Error('Data produk tidak valid.');
+  }
 
+  const harga = formatRupiah(produk.harga);
+  const pesan =
+    produk.stok > 0
+      ? `Halo, saya ingin memesan ${produk.nama} (${harga}) sebanyak 1. Mohon konfirmasi ketersediaannya.`
+      : `Halo, saya ingin menanyakan ketersediaan ${produk.nama} (${harga}). Mohon info kapan stok tersedia.`;
+
+  return `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`;
+}
+
+export function buildWaUrl(product) {
+  return buildWhatsAppUrl(CONFIG.WA_NUMBER, product);
+}
+
+function buildGeneralWaUrl() {
+  const pesan =
+    'Halo GoJan, saya ingin bertanya tentang produk lokal yang tersedia di katalog.';
   return `https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
 }
 
@@ -39,6 +58,41 @@ function el(tag, className, text) {
   if (className) node.className = className;
   if (text !== undefined) node.textContent = text;
   return node;
+}
+
+function svgEl(tag, attributes) {
+  const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [name, value] of Object.entries(attributes)) {
+    node.setAttribute(name, value);
+  }
+  return node;
+}
+
+function createChatIcon() {
+  const svg = svgEl('svg', {
+    viewBox: '0 0 24 24',
+    width: '18',
+    height: '18',
+    'aria-hidden': 'true',
+    focusable: 'false',
+  });
+  svg.append(
+    svgEl('path', {
+      d: 'M4.5 5.5h15v10h-9l-6 4v-14Z',
+      fill: 'none',
+      stroke: 'currentColor',
+      'stroke-width': '1.7',
+      'stroke-linejoin': 'round',
+    }),
+    svgEl('path', {
+      d: 'M8.5 9.5h7M8.5 12.5h4.5',
+      fill: 'none',
+      stroke: 'currentColor',
+      'stroke-width': '1.7',
+      'stroke-linecap': 'round',
+    }),
+  );
+  return svg;
 }
 
 /** Placeholder SVG lokal: inisial produk + warna kategori. */
@@ -52,30 +106,26 @@ function createPlaceholder(product) {
     .join('')
     .toUpperCase();
 
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 320 240');
-  svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-hidden', 'true');
-  svg.setAttribute('focusable', 'false');
+  const svg = svgEl('svg', {
+    viewBox: '0 0 320 240',
+    'aria-hidden': 'true',
+    focusable: 'false',
+  });
   svg.classList.add('placeholder');
-
-  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-  rect.setAttribute('width', '320');
-  rect.setAttribute('height', '240');
-  rect.setAttribute('fill', theme.bg);
-
-  const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  text.setAttribute('x', '160');
-  text.setAttribute('y', '120');
-  text.setAttribute('text-anchor', 'middle');
-  text.setAttribute('dominant-baseline', 'central');
-  text.setAttribute('fill', theme.fg);
-  text.setAttribute('font-family', 'system-ui, sans-serif');
-  text.setAttribute('font-size', '64');
-  text.setAttribute('font-weight', '700');
-  text.textContent = initials || '?';
-
-  svg.append(rect, text);
+  svg.append(
+    svgEl('rect', { width: '320', height: '240', fill: theme.bg }),
+    svgEl('text', {
+      x: '160',
+      y: '120',
+      'text-anchor': 'middle',
+      'dominant-baseline': 'central',
+      fill: theme.fg,
+      'font-family': 'system-ui, sans-serif',
+      'font-size': '64',
+      'font-weight': '700',
+    }),
+  );
+  svg.lastElementChild.textContent = initials || '?';
   return svg;
 }
 
@@ -100,15 +150,38 @@ function createStockBadge(product) {
 }
 
 function createWaButton(product) {
-  const link = el('a', 'btn btn--wa', product.stok > 0 ? 'Pesan via WhatsApp' : 'Tanya ketersediaan');
+  if (product.stok === 0) {
+    const disabled = el(
+      'span',
+      'btn btn--wa btn--wa-disabled',
+      'Pesan via WhatsApp',
+    );
+    disabled.setAttribute('aria-disabled', 'true');
+    disabled.setAttribute('aria-label', `Pesan ${product.nama} dinonaktifkan karena stok habis`);
+    return disabled;
+  }
+
+  const link = el(
+    'a',
+    'btn btn--wa',
+    product.stok > 0 ? 'Pesan via WhatsApp' : 'Tanya ketersediaan',
+  );
   link.href = buildWaUrl(product);
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
+  link.setAttribute(
+    'aria-label',
+    `${product.stok > 0 ? 'Pesan' : 'Tanyakan ketersediaan'} ${product.nama} via WhatsApp`,
+  );
+  link.prepend(createChatIcon());
   return link;
 }
 
 function createProductCard(product) {
-  const card = el('article', `product-card${product.stok === 0 ? ' product-card--habis' : ''}`);
+  const card = el(
+    'article',
+    `product-card${product.stok === 0 ? ' product-card--habis' : ''}`,
+  );
 
   const media = el('div', 'card-media');
   media.append(createProductImage(product));
@@ -117,7 +190,7 @@ function createProductCard(product) {
   const body = el('div', 'card-body');
   body.append(
     el('p', 'card-category', product.kategori),
-    el('h2', 'card-title', product.nama),
+    el('h3', 'card-title', product.nama),
     el('p', 'card-price', formatRupiah(product.harga)),
     createStockBadge(product),
   );
@@ -133,156 +206,146 @@ function createProductCard(product) {
   return card;
 }
 
-export function renderCatalog(products, root) {
-  if (!root) return;
-
+function renderCatalog(products, root) {
   if (products.length === 0) {
-    root.replaceChildren(el('p', 'empty-state', 'Belum ada produk di katalog.'));
+    root.replaceChildren(
+      el('p', 'empty-state', 'Produk tidak ditemukan. Coba ubah kata pencarian atau filter yang dipilih.'),
+    );
     return;
   }
-
   root.replaceChildren(...products.map(createProductCard));
 }
 
-function createKpi(label, value) {
-  const item = el('article', 'kpi');
-  item.append(el('p', 'kpi-label', label), el('p', 'kpi-value', String(value)));
-  return item;
-}
-
-function createDashboardRow(product) {
-  const row = document.createElement('tr');
-
-  const photoCell = document.createElement('td');
-  photoCell.dataset.label = 'Foto';
-  const thumb = el('span', 'thumb');
-  thumb.append(createProductImage(product));
-  photoCell.append(thumb);
-
-  const name = document.createElement('td');
-  name.dataset.label = 'Nama';
-  name.textContent = product.nama;
-
-  const category = document.createElement('td');
-  category.dataset.label = 'Kategori';
-  category.textContent = product.kategori;
-
-  const price = document.createElement('td');
-  price.dataset.label = 'Harga';
-  price.textContent = formatRupiah(product.harga);
-
-  const stock = document.createElement('td');
-  stock.dataset.label = 'Stok';
-  const isLow = product.stok <= CONFIG.LOW_STOCK_THRESHOLD;
-  stock.append(el('span', isLow ? 'stock stock--menipis' : 'stock stock--tersedia', stockStatus(product.stok).label));
-
-  const featured = document.createElement('td');
-  featured.dataset.label = 'Unggulan';
-  featured.textContent = product.unggulan ? 'Ya' : 'Tidak';
-
-  row.append(photoCell, name, category, price, stock, featured);
-  return row;
-}
-
-export function renderDashboard(products, root) {
-  if (!root) return;
-
-  const totalStok = products.reduce((total, product) => total + product.stok, 0);
-  const jumlahHabis = products.filter((product) => product.stok === 0).length;
-
-  const kpiGrid = el('div', 'kpi-grid');
-  kpiGrid.append(
-    createKpi('Total produk', products.length),
-    createKpi('Total stok', totalStok),
-    createKpi('Produk habis', jumlahHabis),
-  );
-
-  const heading = el('h3', 'dashboard-heading', 'Daftar produk');
-  const nodes = [kpiGrid, heading];
-
-  if (products.length === 0) {
-    nodes.push(el('p', 'empty-state', 'Belum ada produk. Tambahkan produk untuk memulai.'));
-  } else {
-    const table = el('table', 'product-table');
-    const head = document.createElement('thead');
-    const headRow = document.createElement('tr');
-    for (const label of ['Foto', 'Nama', 'Kategori', 'Harga', 'Stok', 'Unggulan']) {
-      headRow.append(el('th', undefined, label));
-    }
-    head.append(headRow);
-
-    const body = document.createElement('tbody');
-    body.append(...products.map(createDashboardRow));
-    table.append(head, body);
-
-    const wrapper = el('div', 'table-wrap');
-    wrapper.append(table);
-    nodes.push(wrapper);
-  }
-
-  root.replaceChildren(...nodes);
-}
-
-const STORAGE_MESSAGES = {
-  corrupted:
-    'Data tersimpan tidak dapat dibaca, katalog dimuat ulang dari data contoh. Data lama tidak ditimpa.',
-  quota:
-    'Penyimpanan perangkat penuh. Perubahan tetap ada selama halaman terbuka, tetapi belum tersimpan.',
-  blocked:
-    'Penyimpanan perangkat tidak tersedia. Perubahan hanya bertahan selama halaman terbuka.',
-  unknown: 'Data gagal disimpan ke perangkat. Perubahan hanya ada di memori.',
-};
-
-export function renderStorageBanner(state, banner) {
-  if (!banner) return;
-
-  const message = state.corrupted ? STORAGE_MESSAGES.corrupted : STORAGE_MESSAGES[state.storageError];
-  if (!message) {
-    banner.hidden = true;
-    banner.textContent = '';
+function renderHeroFeatured(product, root) {
+  if (!product) {
+    root.replaceChildren();
     return;
   }
 
-  banner.textContent = message;
-  banner.hidden = false;
+  const card = el('article', 'featured-card');
+
+  const media = el('div', 'featured-media');
+  media.append(createProductImage(product));
+  media.append(el('span', 'badge', 'Pilihan minggu ini'));
+
+  const body = el('div', 'featured-body');
+  body.append(
+    el('p', 'featured-category', product.kategori),
+    el('p', 'featured-name', product.nama),
+    el('p', 'featured-description', product.deskripsi),
+  );
+
+  const row = el('div', 'featured-row');
+  row.append(el('p', 'featured-price', formatRupiah(product.harga)), createStockBadge(product));
+
+  body.append(row);
+  card.append(media, body);
+  root.replaceChildren(card);
 }
 
-/** Tab Katalog/Dashboard dengan dukungan klik dan panah keyboard. */
-export function initTabs() {
-  const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
-  if (tabs.length === 0) return;
+function getCategoryCounts(products) {
+  const counts = new Map();
+  for (const product of products) {
+    counts.set(product.kategori, (counts.get(product.kategori) ?? 0) + 1);
+  }
+  return Array.from(counts.entries()).sort((a, b) => a[0].localeCompare(b[0], 'id'));
+}
 
-  function activate(tab, { focus = false } = {}) {
-    for (const item of tabs) {
-      const selected = item === tab;
-      item.setAttribute('aria-selected', String(selected));
-      item.tabIndex = selected ? 0 : -1;
+function renderCategoryFilter(categories, total, root, active, onSelect) {
+  const buttons = [];
 
-      const panel = document.getElementById(item.getAttribute('aria-controls'));
-      if (panel) panel.hidden = !selected;
-    }
-    if (focus) tab.focus();
+  function makeButton(label, count, value) {
+    const button = el('button', 'category-chip');
+    button.type = 'button';
+    button.setAttribute('aria-pressed', String(value === active));
+    button.append(el('span', undefined, label), el('span', 'chip-count', String(count)));
+    button.addEventListener('click', () => onSelect(value));
+    buttons.push({ button, value });
+    return button;
   }
 
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => activate(tab));
+  const items = [makeButton('Semua', total, 'Semua')];
+  for (const [category, count] of categories) {
+    items.push(makeButton(category, count, category));
+  }
 
-    tab.addEventListener('keydown', (event) => {
-      let targetIndex = null;
-      if (event.key === 'ArrowRight') targetIndex = (index + 1) % tabs.length;
-      if (event.key === 'ArrowLeft') targetIndex = (index - 1 + tabs.length) % tabs.length;
-      if (event.key === 'Home') targetIndex = 0;
-      if (event.key === 'End') targetIndex = tabs.length - 1;
+  root.replaceChildren(...items);
 
-      if (targetIndex !== null) {
-        event.preventDefault();
-        activate(tabs[targetIndex], { focus: true });
-      }
-    });
+  return function syncActive(nextActive) {
+    for (const { button, value } of buttons) {
+      const pressed = value === nextActive;
+      button.setAttribute('aria-pressed', String(pressed));
+      button.classList.toggle('is-active', pressed);
+    }
+  };
+}
+
+/**
+ * Merender seluruh landing page dari data produk.
+ * Filter kategori dikelola di sini karena halaman ini tidak punya state lain.
+ */
+export function initLanding(products) {
+  const grid = document.getElementById('catalog-root');
+  const filterRoot = document.getElementById('kategori');
+  const count = document.getElementById('catalog-count');
+  const searchInput = document.getElementById('catalog-search');
+  const sortSelect = document.getElementById('catalog-sort');
+  const heroRoot = document.getElementById('hero-featured');
+  const heroMeta = document.getElementById('hero-meta');
+  const heroWa = document.getElementById('hero-wa-link');
+
+  if (!grid || !filterRoot || !count) return;
+
+  const categories = getCategoryCounts(products);
+  let activeCategory = 'Semua';
+  let searchTerm = '';
+  let sortBy = 'default';
+
+  if (heroRoot) {
+    const featured = products.find((product) => product.unggulan) ?? products[0];
+    renderHeroFeatured(featured, heroRoot);
+  }
+
+  if (heroMeta) {
+    heroMeta.textContent = `${products.length} produk pilihan · ${categories.length} kategori · pesan langsung via WhatsApp`;
+  }
+
+  if (heroWa) {
+    heroWa.href = buildGeneralWaUrl();
+  }
+
+  const syncActive = renderCategoryFilter(
+    categories,
+    products.length,
+    filterRoot,
+    activeCategory,
+    (value) => {
+      activeCategory = value;
+      syncActive(value);
+      update();
+    },
+  );
+
+  searchInput?.addEventListener('input', () => {
+    searchTerm = searchInput.value;
+    update();
   });
 
-  if (window.location.hash === '#dashboard') {
-    const dashboardTab = document.getElementById('tab-dashboard');
-    if (dashboardTab) activate(dashboardTab);
+  sortSelect?.addEventListener('change', () => {
+    sortBy = sortSelect.value;
+    update();
+  });
+
+  function update() {
+    const visible = filterProducts(products, {
+      searchTerm,
+      category: activeCategory,
+      sortBy,
+    });
+
+    renderCatalog(visible, grid);
+    count.textContent = `Menampilkan ${visible.length} dari ${products.length} produk`;
   }
+
+  update();
 }

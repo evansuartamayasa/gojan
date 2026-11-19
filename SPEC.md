@@ -1,10 +1,10 @@
-# SPEC — Housekeeper
+# SPEC — GoJan
 
 Aplikasi katalog produk UMKM makanan/minuman berbasis web. Satu perangkat dipakai bersama oleh calon pembeli (mode katalog) dan pengelola toko (mode dashboard demo).
 
 | Atribut | Nilai |
 |---|---|
-| Nama produk | Housekeeper |
+| Nama produk | GoJan |
 | Jenis | Aplikasi web statis (single page) |
 | Stack | Vite + JavaScript vanilla (ES modules), HTML, CSS |
 | Backend | Tidak ada |
@@ -12,7 +12,7 @@ Aplikasi katalog produk UMKM makanan/minuman berbasis web. Satu perangkat dipaka
 | Target pengerjaan | Latihan 1 hari (± 8 jam efektif) |
 | Status dokumen | Final untuk MVP |
 
-**Catatan repositori:** berkas `index.html`, `css/`, `js/`, `CATATAN.md`, dan `UI-SPEC.md` yang ada saat ini milik latihan landing page **BersihKilat** (jasa housekeeping) dan **tidak** menjadi bagian aplikasi ini. Implementasi Housekeeper akan dibuat sebagai proyek Vite terpisah di subfolder `housekeeper/` agar tidak menimpa pekerjaan lama. Keputusan lokasi ini tidak memengaruhi perilaku yang dispesifikasikan di bawah.
+**Catatan repositori:** berkas `index.html`, `css/`, `js/`, `CATATAN.md`, dan `UI-SPEC.md` yang ada saat ini milik latihan landing page **BersihKilat** (jasa housekeeping) dan **tidak** menjadi bagian aplikasi ini. Implementasi GoJan akan dibuat sebagai proyek Vite terpisah di subfolder `GoJan/` agar tidak menimpa pekerjaan lama. Keputusan lokasi ini tidak memengaruhi perilaku yang dispesifikasikan di bawah.
 
 ---
 
@@ -80,7 +80,7 @@ Prioritas: **P0** = wajib untuk dianggap selesai; **P1** = dikerjakan bila waktu
 
 | ID | Fitur | Detail | Prio |
 |---|---|---|---|
-| F-23 | Persistensi localStorage | Setiap mutasi berhasil langsung ditulis ke `housekeeper:v1:products`. Reload halaman mempertahankan data. | P0 |
+| F-23 | Persistensi localStorage | Setiap mutasi berhasil langsung ditulis ke `GoJan:v1:products`. Reload halaman mempertahankan data. | P0 |
 | F-24 | Pemulihan data rusak | JSON tidak valid / bukan array / skema tidak dikenali → pakai data contoh, tampilkan banner "Data tersimpan tidak dapat dibaca, katalog dimuat ulang dari data contoh", dan jangan menimpa data lama sebelum pengguna menekan "Muat ulang data contoh". | P0 |
 | F-25 | Peringatan kuota penuh | Bila `localStorage.setItem` melempar `QuotaExceededError`, tampilkan galat yang bisa ditutup, pertahankan state di memori, jangan mengklaim "tersimpan". | P0 |
 | F-26 | Sinkron antar tab | Mendengarkan event `storage` dan memuat ulang state bila kunci berubah di tab lain. | P1 |
@@ -124,8 +124,8 @@ Satu entitas: **Product**. Disimpan sebagai array JSON di satu kunci localStorag
 
 | Kunci | Isi |
 |---|---|
-| `housekeeper:v1:products` | `JSON.stringify(Product[])` |
-| `housekeeper:v1:schema` | `"1"` (string) — penanda versi skema |
+| `GoJan:v1:products` | `JSON.stringify(Product[])` |
+| `GoJan:v1:schema` | `"1"` (string) — penanda versi skema |
 
 Aturan versi: bila `schema` tidak ada atau bukan `"1"`, diperlakukan sebagai data tidak dikenali (jalur F-24). Migrasi otomatis hanya dilakukan bila versi lebih lama dan aturannya ditulis di kode; untuk MVP, hanya ada versi 1.
 
@@ -298,8 +298,8 @@ Semua kriteria diperiksa manual pada build produksi lokal (`npm run build` lalu 
 ### 9.5 Ketahanan & aksesibilitas
 | ID | Langkah | Hasil yang diharapkan |
 |---|---|---|
-| AC-34 | Set `housekeeper:v1:products` menjadi `{rusak` lewat DevTools, reload | Banner data tidak terbaca tampil; katalog memakai 8 data contoh; halaman tidak blank |
-| AC-35 | Kosongkan `housekeeper:v1:schema`, reload | Diperlakukan sebagai data tidak dikenali; banner tampil; tidak menimpa diam-diam |
+| AC-34 | Set `GoJan:v1:products` menjadi `{rusak` lewat DevTools, reload | Banner data tidak terbaca tampil; katalog memakai 8 data contoh; halaman tidak blank |
+| AC-35 | Kosongkan `GoJan:v1:schema`, reload | Diperlakukan sebagai data tidak dikenali; banner tampil; tidak menimpa diam-diam |
 | AC-36 | Selesaikan alur beli (cari → filter → buka WA) hanya dengan keyboard | Semua langkah tercapai; fokus selalu terlihat; tidak ada jebakan fokus |
 | AC-37 | Buka dialog tambah/ubah, tekan `Esc` | Dialog tertutup; fokus kembali ke tombol pemicu |
 | AC-38 | Resize ke 320 px dan 1440 px | Tanpa scroll horizontal; kartu & tabel tetap terbaca; tombol ≥ 44 px di mobile |
@@ -393,7 +393,7 @@ Total target ± 8 jam. Setiap iterasi punya definisi selesai (DoD) yang bisa dil
 ## 11. Asumsi & Pertanyaan Terbuka
 
 **Asumsi yang dipakai (boleh dikoreksi tanpa mengubah struktur dokumen):**
-1. Aplikasi dibangun di subfolder `housekeeper/` dan tidak mengubah berkas BersihKilat.
+1. Aplikasi dibangun di subfolder `GoJan/` dan tidak mengubah berkas BersihKilat.
 2. Kategori bersifat bebas-teks dengan saran dari data yang ada, bukan entitas terpisah.
 3. Jumlah pesanan WhatsApp selalu 1 (tanpa pemilih kuantitas).
 4. Bahasa antarmuka Indonesia; mata uang Rupiah; zona waktu tidak relevan.

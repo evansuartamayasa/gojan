@@ -1,12 +1,12 @@
-# TASKS — Housekeeper
+# TASKS — GoJan
 
-Rincian pekerjaan untuk membangun aplikasi katalog produk UMKM **Housekeeper** sesuai `SPEC.md`. Setiap tugas punya kriteria penerimaan yang bisa diperiksa di layar dan daftar berkas yang kemungkinan berubah. Dokumen ini tidak mengubah kode.
+Rincian pekerjaan untuk membangun aplikasi katalog produk UMKM **GoJan** sesuai `SPEC.md`. Setiap tugas punya kriteria penerimaan yang bisa diperiksa di layar dan daftar berkas yang kemungkinan berubah. Dokumen ini tidak mengubah kode.
 
 | Atribut | Nilai |
 |---|---|
 | Sumber perilaku | `SPEC.md` §3–§9 (fitur, model data, NFR, acceptance criteria) |
 | Sumber visual | `UI-SPEC.md` — **hanya** token warna, tipografi, radius, focus ring, dan aturan target sentuh 44 px |
-| Lokasi kode | `housekeeper/` (proyek Vite terpisah; tidak menyentuh berkas BersihKilat) |
+| Lokasi kode | `GoJan/` (proyek Vite terpisah; tidak menyentuh berkas BersihKilat) |
 | Total estimasi MVP | ± 7 jam 45 menit untuk M0–M9 |
 | Status | Rencana, belum ada implementasi |
 
@@ -15,8 +15,8 @@ Rincian pekerjaan untuk membangun aplikasi katalog produk UMKM **Housekeeper** s
 `UI-SPEC.md` di repositori ini adalah spesifikasi untuk **BersihKilat**, landing page jasa housekeeping. Dokumen itu tidak boleh dipakai apa adanya karena:
 
 - Komponennya untuk layanan (paket harga, form pemesanan, dashboard pesanan #1042), bukan produk (foto, harga satuan, stok).
-- Dashboard di sana bersifat statis; dashboard Housekeeper harus CRUD fungsional.
-- Ia mendefinisikan navbar dengan 6 tautan dan scrollspy per section; Housekeeper hanya punya dua tab.
+- Dashboard di sana bersifat statis; dashboard GoJan harus CRUD fungsional.
+- Ia mendefinisikan navbar dengan 6 tautan dan scrollspy per section; GoJan hanya punya dua tab.
 
 Yang **dipakai ulang**: palet `--cream-50/100/200`, `--green-900/700/500/100`, `--spice-600`, `--wa #1E7A46`, `--focus #1F6FB2`, tabel kontras §2.2, skala spasi 4 px, radius `sm 8 / md 12 / lg 20`, font `Plus Jakarta Sans` + cadangan sistem, dan aturan target sentuh 44×44 px. Yang **tidak dipakai**: seluruh tata letak section, wireframe, form pemesanan, harga paket, testimoni, tombol float WhatsApp, sidebar dashboard.
 
@@ -56,16 +56,16 @@ Tujuan: proyek Vite berjalan, struktur folder dan konstanta terpusat ada, halama
 
 ### T-0.1 — Inisialisasi proyek Vite `P0`
 
-- Buat proyek Vite vanilla (tanpa template framework) di `housekeeper/`.
+- Buat proyek Vite vanilla (tanpa template framework) di `GoJan/`.
 - `npm install`, `npm run dev` menyajikan halaman.
 - Tidak ada dependensi runtime tambahan selain Vite sebagai devDependency.
 
 **Kriteria penerimaan**
 - `npm run dev` membuka halaman di `localhost` tanpa error konsol.
-- Berkas BersihKilat di root tidak berubah (`git status` hanya menunjukkan `housekeeper/`).
+- Berkas BersihKilat di root tidak berubah (`git status` hanya menunjukkan `GoJan/`).
 - `package.json` hanya memuat Vite di `devDependencies`.
 
-**Berkas mungkin berubah:** `housekeeper/package.json` (baru), `housekeeper/package-lock.json` (baru), `housekeeper/index.html` (baru), `housekeeper/vite.config.js` (baru), `housekeeper/.gitignore` (baru).
+**Berkas mungkin berubah:** `GoJan/package.json` (baru), `GoJan/package-lock.json` (baru), `GoJan/index.html` (baru), `GoJan/vite.config.js` (baru), `GoJan/.gitignore` (baru).
 
 ### T-0.2 — Struktur modul `P0`
 
@@ -76,18 +76,18 @@ Tujuan: proyek Vite berjalan, struktur folder dan konstanta terpusat ada, halama
 - Semua modul ter-*import* tanpa galat `Cannot find module` atau ekspor hilang.
 - Tidak ada modul yang memuat logika bisnis ganda (format Rupiah hanya di `format.js`, nomor WA hanya di `config.js`).
 
-**Berkas mungkin berubah:** `housekeeper/src/main.js` (baru), `housekeeper/src/config.js` (baru), `housekeeper/src/state.js` (baru), `housekeeper/src/storage.js` (baru), `housekeeper/src/products.js` (baru), `housekeeper/src/format.js` (baru), `housekeeper/src/ui/catalog.js` (baru), `housekeeper/src/ui/dashboard.js` (baru), `housekeeper/src/ui/dialog.js` (baru), `housekeeper/src/ui/toast.js` (baru).
+**Berkas mungkin berubah:** `GoJan/src/main.js` (baru), `GoJan/src/config.js` (baru), `GoJan/src/state.js` (baru), `GoJan/src/storage.js` (baru), `GoJan/src/products.js` (baru), `GoJan/src/format.js` (baru), `GoJan/src/ui/catalog.js` (baru), `GoJan/src/ui/dashboard.js` (baru), `GoJan/src/ui/dialog.js` (baru), `GoJan/src/ui/toast.js` (baru).
 
 ### T-0.3 — Konstanta konfigurasi `P0`
 
-- `src/config.js` mengekspor: `WA_NUMBER = '6281234567890'`, `STORAGE_KEYS = { products: 'housekeeper:v1:products', schema: 'housekeeper:v1:schema' }`, `SCHEMA_VERSION = '1'`, batas validasi (`NAMA_MIN 2`, `NAMA_MAX 60`, `HARGA_MAX 100000000`, `STOK_MAX 100000`, `DESKRIPSI_MAX 280`, `KATEGORI_MAX 24`), `LOW_STOCK_THRESHOLD = 5`.
+- `src/config.js` mengekspor: `WA_NUMBER = '6281234567890'`, `STORAGE_KEYS = { products: 'GoJan:v1:products', schema: 'GoJan:v1:schema' }`, `SCHEMA_VERSION = '1'`, batas validasi (`NAMA_MIN 2`, `NAMA_MAX 60`, `HARGA_MAX 100000000`, `STOK_MAX 100000`, `DESKRIPSI_MAX 280`, `KATEGORI_MAX 24`), `LOW_STOCK_THRESHOLD = 5`.
 
 **Kriteria penerimaan**
-- Pencarian `6281234567890` di seluruh `housekeeper/src` hanya menemukan `src/config.js`.
-- Pencarian string `housekeeper:v1:` hanya menemukan `src/config.js`.
+- Pencarian `6281234567890` di seluruh `GoJan/src` hanya menemukan `src/config.js`.
+- Pencarian string `GoJan:v1:` hanya menemukan `src/config.js`.
 - Mengubah `WA_NUMBER` di satu tempat mengubah semua tautan (diperiksa setelah M4).
 
-**Berkas mungkin berubah:** `housekeeper/src/config.js` (baru).
+**Berkas mungkin berubah:** `GoJan/src/config.js` (baru).
 
 ### T-0.4 — Kerangka dokumen & tab `P0`
 
@@ -99,7 +99,7 @@ Tujuan: proyek Vite berjalan, struktur folder dan konstanta terpusat ada, halama
 - Kedua tab dapat difokuskan dan diaktifkan dengan Enter/Space; `aria-selected="true"` berpindah.
 - Label demo terlihat saat tab Dashboard aktif, tidak hanya lewat `title`.
 
-**Berkas mungkin berubah:** `housekeeper/index.html` (ubah), `housekeeper/src/main.js` (ubah), `housekeeper/src/styles/base.css` (baru), `housekeeper/src/styles/tokens.css` (baru).
+**Berkas mungkin berubah:** `GoJan/index.html` (ubah), `GoJan/src/main.js` (ubah), `GoJan/src/styles/base.css` (baru), `GoJan/src/styles/tokens.css` (baru).
 
 ---
 
@@ -117,7 +117,7 @@ Tujuan: delapan produk contoh dan aturan model tersedia sebagai satu sumber kebe
 - Tidak ada aturan `outline: none` tanpa pengganti.
 - Fokus terlihat pada tautan, tab, dan tombol.
 
-**Berkas mungkin berubah:** `housekeeper/src/styles/tokens.css` (baru), `housekeeper/src/styles/base.css` (baru), `housekeeper/src/styles/layout.css` (baru).
+**Berkas mungkin berubah:** `GoJan/src/styles/tokens.css` (baru), `GoJan/src/styles/base.css` (baru), `GoJan/src/styles/layout.css` (baru).
 
 ### T-1.2 — Model produk & seed delapan produk `P0`
 
@@ -130,7 +130,7 @@ Tujuan: delapan produk contoh dan aturan model tersedia sebagai satu sumber kebe
 - `validateProduct` menolak `harga: 12.5`, `stok: -1`, `stok: 12.5`, `nama: 'A'`, dan `imageUrl: 'https://contoh.com/a.jpg'`.
 - `validateProduct` menerima produk dengan `deskripsi: ''` dan `imageUrl: ''`.
 
-**Berkas mungkin berubah:** `housekeeper/src/products.js` (baru).
+**Berkas mungkin berubah:** `GoJan/src/products.js` (baru).
 
 ### T-1.3 — Derived values `P0`
 
@@ -142,7 +142,7 @@ Tujuan: delapan produk contoh dan aturan model tersedia sebagai satu sumber kebe
 - Kategori seed = `['Camilan', 'Kue', 'Makanan', 'Minuman']`.
 - `getStockStatus(0) === 'habis'`, `(1) === 'menipis'`, `(5) === 'menipis'`, `(6) === 'tersedia'`.
 
-**Berkas mungkin berubah:** `housekeeper/src/state.js` (baru), `housekeeper/src/format.js` (baru).
+**Berkas mungkin berubah:** `GoJan/src/state.js` (baru), `GoJan/src/format.js` (baru).
 
 ### T-1.4 — Format Rupiah & pesan WhatsApp `P0`
 
@@ -154,7 +154,7 @@ Tujuan: delapan produk contoh dan aturan model tersedia sebagai satu sumber kebe
 - Pesan varian normal memuat nama, `Rp45.000`, dan "1".
 - `decodeURIComponent(new URL(buildWaUrl(p01)).searchParams.get('text'))` mengembalikan teks asli termasuk baris baru.
 
-**Berkas mungkin berubah:** `housekeeper/src/format.js` (ubah), `housekeeper/src/config.js` (ubah bila perlu).
+**Berkas mungkin berubah:** `GoJan/src/format.js` (ubah), `GoJan/src/config.js` (ubah bila perlu).
 
 ---
 
@@ -172,7 +172,7 @@ Tujuan: delapan kartu produk tampil benar dan responsif, termasuk placeholder ga
 - Membuka tiap SVG langsung di peramban tidak menghasilkan galat.
 - Tidak ada atribut `href`/`src` ke domain eksternal di dalam SVG.
 
-**Berkas mungkin berubah:** `housekeeper/public/img/*.svg` (baru, 9 berkas).
+**Berkas mungkin berubah:** `GoJan/public/img/*.svg` (baru, 9 berkas).
 
 ### T-2.2 — Render grid kartu produk `P0`
 
@@ -186,7 +186,7 @@ Tujuan: delapan kartu produk tampil benar dan responsif, termasuk placeholder ga
 - AC-05 lulus: p07 & p08 tampil `Rp62.000`.
 - Pada 1024 px tepat 3 kartu per baris; tidak ada kartu yang melebihi lebar kolom.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/styles/components.css` (baru), `housekeeper/src/styles/layout.css` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/styles/components.css` (baru), `GoJan/src/styles/layout.css` (ubah), `GoJan/src/main.js` (ubah).
 
 ### T-2.3 — Status stok & penonjolan habis `P0`
 
@@ -198,7 +198,7 @@ Tujuan: delapan kartu produk tampil benar dan responsif, termasuk placeholder ga
 - Mengukur kontras teks pada kartu p02 di DevTools tetap ≥ 4.5:1.
 - Status tidak hanya dibedakan oleh warna; teks selalu menyebut keadaan.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/styles/components.css` (ubah), `housekeeper/src/format.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/styles/components.css` (ubah), `GoJan/src/format.js` (ubah).
 
 ### T-2.4 — Penanganan gambar gagal `P0`
 
@@ -210,7 +210,7 @@ Tujuan: delapan kartu produk tampil benar dan responsif, termasuk placeholder ga
 - Tidak ada permintaan jaringan eksternal di tab Network.
 - Tidak ada loop `onerror` (konsol tidak berulang).
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/public/img/placeholder.svg` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/public/img/placeholder.svg` (ubah).
 
 ### T-2.5 — Urutan default "Unggulan dulu" `P0`
 
@@ -221,7 +221,7 @@ Tujuan: delapan kartu produk tampil benar dan responsif, termasuk placeholder ga
 - AC-02 lulus: p01, p03, p06 lebih dulu, lalu sisanya A–Z.
 - Fungsi sorting tidak mengubah array sumber (dicek dengan membandingkan urutan seed sebelum/sesudah render).
 
-**Berkas mungkin berubah:** `housekeeper/src/state.js` (ubah), `housekeeper/src/ui/catalog.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/state.js` (ubah), `GoJan/src/ui/catalog.js` (ubah).
 
 ---
 
@@ -239,7 +239,7 @@ Tujuan: pencarian, filter kategori, sorting, dan keadaan kosong bekerja bersamaa
 - `getVisibleProducts()` adalah fungsi murni: input sama → output sama.
 - Query kosong + kategori `Semua` + sort default menghasilkan 8 produk.
 
-**Berkas mungkin berubah:** `housekeeper/src/state.js` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/state.js` (ubah), `GoJan/src/main.js` (ubah).
 
 ### T-3.2 — Kolom pencarian `P0`
 
@@ -250,7 +250,7 @@ Tujuan: pencarian, filter kategori, sorting, dan keadaan kosong bekerja bersamaa
 - Mengetik cepat tidak menyebabkan kehilangan fokus pada input.
 - Input kosong mengembalikan seluruh hasil sesuai filter aktif.
 
-**Berkas mungkin berubah:** `housekeeper/index.html` (ubah), `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/index.html` (ubah), `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/main.js` (ubah).
 
 ### T-3.3 — Chip kategori & sorting `P0`
 
@@ -264,7 +264,7 @@ Tujuan: pencarian, filter kategori, sorting, dan keadaan kosong bekerja bersamaa
 - AC-13 lulus: `Reset`/"Tampilkan semua produk" mengembalikan kondisi awal.
 - Chip dapat diaktifkan dengan keyboard dan target sentuh ≥ 44 px di mobile.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/styles/components.css` (ubah), `housekeeper/index.html` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/styles/components.css` (ubah), `GoJan/index.html` (ubah).
 
 ### T-3.4 — Baris jumlah hasil & keadaan kosong `P0`
 
@@ -276,7 +276,7 @@ Tujuan: pencarian, filter kategori, sorting, dan keadaan kosong bekerja bersamaa
 - Angka "8" pada baris hasil mengikuti jumlah total data saat ini (bukan konstanta), terverifikasi setelah menambah produk di M5.
 - Pembaca layar/pengumuman tidak mengulang pesan yang sama dua kali.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/styles/components.css` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/styles/components.css` (ubah).
 
 ### T-3.5 — Kombinasi filter & performa `P0`
 
@@ -288,7 +288,7 @@ Tujuan: pencarian, filter kategori, sorting, dan keadaan kosong bekerja bersamaa
 - Render 50 produk < 100 ms (NFR-02), dicatat angkanya di catatan QA.
 - Tidak ada `setTimeout`/`debounce` yang membuat hasil terasa tertunda.
 
-**Berkas mungkin berubah:** `housekeeper/src/state.js` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/state.js` (ubah), `GoJan/src/main.js` (ubah).
 
 ---
 
@@ -306,7 +306,7 @@ Tujuan: setiap kartu punya tombol pesan yang membuka `wa.me` dengan pesan terisi
 - AC-20 lulus: produk habis memakai pesan "menanyakan ketersediaan", bukan pernyataan pesanan.
 - AC-21 lulus: semua tautan memakai nomor yang sama dan memuat `noopener`.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/styles/components.css` (ubah), `housekeeper/src/format.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/styles/components.css` (ubah), `GoJan/src/format.js` (ubah).
 
 ### T-4.2 — Varian pesan `P0`
 
@@ -318,7 +318,7 @@ Tujuan: setiap kartu punya tombol pesan yang membuka `wa.me` dengan pesan terisi
 - Teks pesan tidak memuat karakter mentah yang merusak URL (diperiksa dengan `decodeURIComponent`).
 - Nama produk dengan `&` dan spasi ganda ter-encode benar (contoh uji: `Kopi & Gula`).
 
-**Berkas mungkin berubah:** `housekeeper/src/format.js` (ubah), `housekeeper/src/config.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/format.js` (ubah), `GoJan/src/config.js` (ubah).
 
 ### T-4.3 — Umpan balik bila pop-up diblokir `P0`
 
@@ -330,7 +330,7 @@ Tujuan: setiap kartu punya tombol pesan yang membuka `wa.me` dengan pesan terisi
 - Pesan cadangan muncul di area `aria-live` atau toast yang dapat ditutup.
 - Tautan cadangan tetap memakai nomor dari `config.js`.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/ui/toast.js` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/ui/toast.js` (ubah), `GoJan/src/main.js` (ubah).
 
 ---
 
@@ -348,7 +348,7 @@ Tujuan: pengelola dapat menambah, melihat, mengubah, dan menghapus produk dengan
 - Pada 320 px tidak ada scroll horizontal (NFR-07).
 - Tombol Ubah/Hapus ≥ 44 px di mobile dan punya `aria-label` yang menyebut nama produk.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/dashboard.js` (ubah), `housekeeper/src/styles/components.css` (ubah), `housekeeper/index.html` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/dashboard.js` (ubah), `GoJan/src/styles/components.css` (ubah), `GoJan/index.html` (ubah).
 
 ### T-5.2 — Dialog form tambah/ubah `P0`
 
@@ -361,7 +361,7 @@ Tujuan: pengelola dapat menambah, melihat, mengubah, dan menghapus produk dengan
 - Setiap input punya `<label for>`; tidak ada input tanpa nama aksesibel.
 - Membuka mode ubah menampilkan nilai yang identik dengan data tersimpan (AC-16 di `SPEC.md` §3).
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/dialog.js` (ubah), `housekeeper/src/ui/dashboard.js` (ubah), `housekeeper/index.html` (ubah), `housekeeper/src/styles/components.css` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/dialog.js` (ubah), `GoJan/src/ui/dashboard.js` (ubah), `GoJan/index.html` (ubah), `GoJan/src/styles/components.css` (ubah).
 
 ### T-5.3 — Validasi form & ringkasan galat `P0`
 
@@ -375,7 +375,7 @@ Tujuan: pengelola dapat menambah, melihat, mengubah, dan menghapus produk dengan
 - AC-27 lulus: `https://contoh.com/a.jpg` ditolak dengan pesan path lokal.
 - Pesan galat tidak hanya ditandai warna (ada teks + ikon).
 
-**Berkas mungkin berubah:** `housekeeper/src/products.js` (ubah), `housekeeper/src/ui/dialog.js` (ubah), `housekeeper/src/styles/components.css` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/products.js` (ubah), `GoJan/src/ui/dialog.js` (ubah), `GoJan/src/styles/components.css` (ubah).
 
 ### T-5.4 — Simpan, perbarui, hapus `P0`
 
@@ -389,7 +389,7 @@ Tujuan: pengelola dapat menambah, melihat, mengubah, dan menghapus produk dengan
 - AC-29 & AC-30 lulus.
 - Setelah hapus, fokus berpindah ke tempat yang masuk akal (bukan `body`).
 
-**Berkas mungkin berubah:** `housekeeper/src/state.js` (ubah), `housekeeper/src/ui/dashboard.js` (ubah), `housekeeper/src/ui/dialog.js` (ubah), `housekeeper/src/ui/catalog.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/state.js` (ubah), `GoJan/src/ui/dashboard.js` (ubah), `GoJan/src/ui/dialog.js` (ubah), `GoJan/src/ui/catalog.js` (ubah).
 
 ### T-5.5 — Reset data contoh `P0`
 
@@ -400,7 +400,7 @@ Tujuan: pengelola dapat menambah, melihat, mengubah, dan menghapus produk dengan
 - Konfirmasi menyebut akibatnya ("perubahan akan hilang").
 - Setelah reset, katalog dan KPI diperbarui tanpa reload.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/dashboard.js` (ubah), `housekeeper/src/state.js` (ubah), `housekeeper/src/products.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/dashboard.js` (ubah), `GoJan/src/state.js` (ubah), `GoJan/src/products.js` (ubah).
 
 ### T-5.6 — Toast notifikasi `P1`
 
@@ -411,7 +411,7 @@ Tujuan: pengelola dapat menambah, melihat, mengubah, dan menghapus produk dengan
 - Toast tidak menangkap fokus keyboard dan tidak menggeser layout.
 - Bila P1 dipotong, `SPEC.md` §9.6 dicatat di README dan AC terkait dinyatakan tidak berlaku.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/toast.js` (ubah), `housekeeper/src/styles/components.css` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/toast.js` (ubah), `GoJan/src/styles/components.css` (ubah), `GoJan/src/main.js` (ubah).
 
 ---
 
@@ -421,7 +421,7 @@ Tujuan: data bertahan setelah reload, dan kerusakan data tidak menghasilkan hala
 
 ### T-6.1 — Baca/tulis dengan skema versi `P0`
 
-- `loadProducts()` membaca `housekeeper:v1:products` + `housekeeper:v1:schema`; menulis keduanya.
+- `loadProducts()` membaca `GoJan:v1:products` + `GoJan:v1:schema`; menulis keduanya.
 - Setiap mutasi berhasil langsung menulis; tidak menulis pada setiap pengetikan pencarian.
 
 **Kriteria penerimaan**
@@ -429,7 +429,7 @@ Tujuan: data bertahan setelah reload, dan kerusakan data tidak menghasilkan hala
 - Kunci `schema` bernilai `"1"` setelah penyimpanan pertama.
 - Mengetik di kolom pencarian tidak memicu `localStorage.setItem` (dicek dengan breakpoint/DevTools).
 
-**Berkas mungkin berubah:** `housekeeper/src/storage.js` (ubah), `housekeeper/src/state.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/storage.js` (ubah), `GoJan/src/state.js` (ubah).
 
 ### T-6.2 — Validasi data tersimpan `P0`
 
@@ -441,7 +441,7 @@ Tujuan: data bertahan setelah reload, dan kerusakan data tidak menghasilkan hala
 - AC-35 lulus: `schema` dikosongkan → banner tampil, data lama tidak tertimpa sebelum reset.
 - Banner dapat ditutup dan tidak hilang sebelum pengguna melihatnya (tidak auto-dismiss).
 
-**Berkas mungkin berubah:** `housekeeper/src/storage.js` (ubah), `housekeeper/index.html` (ubah), `housekeeper/src/styles/components.css` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/storage.js` (ubah), `GoJan/index.html` (ubah), `GoJan/src/styles/components.css` (ubah).
 
 ### T-6.3 — Kuota penuh & localStorage diblokir `P0`
 
@@ -452,7 +452,7 @@ Tujuan: data bertahan setelah reload, dan kerusakan data tidak menghasilkan hala
 - Aplikasi tetap dapat dipakai setelah galat (state di memori konsisten).
 - Tidak ada exception yang lolos ke konsol.
 
-**Berkas mungkin berubah:** `housekeeper/src/storage.js` (ubah), `housekeeper/src/ui/toast.js` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/storage.js` (ubah), `GoJan/src/ui/toast.js` (ubah), `GoJan/src/main.js` (ubah).
 
 ### T-6.4 — Sinkron antar tab `P1`
 
@@ -463,7 +463,7 @@ Tujuan: data bertahan setelah reload, dan kerusakan data tidak menghasilkan hala
 - Tidak terjadi loop tulis-baca antar tab.
 - Bila P1 dipotong, batasan dicatat di README (R-09).
 
-**Berkas mungkin berubah:** `housekeeper/src/storage.js` (ubah), `housekeeper/src/main.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/storage.js` (ubah), `GoJan/src/main.js` (ubah).
 
 ---
 
@@ -481,7 +481,7 @@ Tujuan: seluruh `SPEC.md` §9 ditelusuri pada build produksi dan dev server, has
 - Setiap kegagalan punya penyebab dan tindakan; tidak ada AC yang dilewati tanpa alasan.
 - Tidak ada error/warning konsol selama penelusuran.
 
-**Berkas mungkin berubah:** `housekeeper/TESTING.md` (baru), `housekeeper/src/**` (perbaikan bila ada kegagalan).
+**Berkas mungkin berubah:** `GoJan/TESTING.md` (baru), `GoJan/src/**` (perbaikan bila ada kegagalan).
 
 ### T-7.2 — Uji keyboard & aksesibilitas `P0`
 
@@ -493,7 +493,7 @@ Tujuan: seluruh `SPEC.md` §9 ditelusuri pada build produksi dan dev server, has
 - Semua target sentuh ≥ 44×44 px di 360 px (AC-38 bagian tombol).
 - Tidak ada `outline: none` yang efektif di CSS hasil build.
 
-**Berkas mungkin berubah:** `housekeeper/src/styles/*.css` (ubah), `housekeeper/index.html` (ubah), `housekeeper/TESTING.md` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/styles/*.css` (ubah), `GoJan/index.html` (ubah), `GoJan/TESTING.md` (ubah).
 
 ### T-7.3 — Uji responsif 320–1440 px `P0`
 
@@ -504,7 +504,7 @@ Tujuan: seluruh `SPEC.md` §9 ditelusuri pada build produksi dan dev server, has
 - Tabel dashboard berubah menjadi kartu di < 768 px.
 - Zoom 200% tidak memotong konten secara horizontal.
 
-**Berkas mungkin berubah:** `housekeeper/src/styles/layout.css` (ubah), `housekeeper/src/styles/components.css` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/styles/layout.css` (ubah), `GoJan/src/styles/components.css` (ubah).
 
 ### T-7.4 — Uji ketahanan & lintas peramban `P0`
 
@@ -516,7 +516,7 @@ Tujuan: seluruh `SPEC.md` §9 ditelusuri pada build produksi dan dev server, has
 - Mode privat tidak membuat halaman blank; banner peringatan tampil bila penyimpanan gagal.
 - AC-42 lulus: tab Network hanya memuat aset lokal.
 
-**Berkas mungkin berubah:** `housekeeper/TESTING.md` (ubah), `housekeeper/src/storage.js` (ubah), `housekeeper/README.md` (baru).
+**Berkas mungkin berubah:** `GoJan/TESTING.md` (ubah), `GoJan/src/storage.js` (ubah), `GoJan/README.md` (baru).
 
 ---
 
@@ -526,7 +526,7 @@ Tujuan: tidak ada jalur eksekusi skrip dari data produk dan tidak ada rahasia di
 
 ### T-8.1 — Audit rendering & XSS `P0`
 
-- Cari semua `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `eval`, `new Function`, `document.write` di `housekeeper/src`.
+- Cari semua `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `eval`, `new Function`, `document.write` di `GoJan/src`.
 - Semua teks produk dirender via `textContent`; atribut `src` diisi lewat properti, bukan string HTML.
 
 **Kriteria penerimaan**
@@ -534,7 +534,7 @@ Tujuan: tidak ada jalur eksekusi skrip dari data produk dan tidak ada rahasia di
 - Nol kemunculan `innerHTML` dengan data produk (kemunculan statis untuk markup kosong harus diberi komentar alasan).
 - Uji tambahan: deskripsi berisi `<script>alert(1)</script>` dan kategori berisi `" onmouseover="alert(1)` tetap tampil sebagai teks.
 
-**Berkas mungkin berubah:** `housekeeper/src/ui/catalog.js` (ubah), `housekeeper/src/ui/dashboard.js` (ubah), `housekeeper/src/ui/toast.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/ui/catalog.js` (ubah), `GoJan/src/ui/dashboard.js` (ubah), `GoJan/src/ui/toast.js` (ubah).
 
 ### T-8.2 — Validasi `imageUrl` & tautan eksternal `P0`
 
@@ -546,7 +546,7 @@ Tujuan: tidak ada jalur eksekusi skrip dari data produk dan tidak ada rahasia di
 - Menyisipkan `/img/../../etc/passwd` ditolak atau tidak merusak tampilan.
 - AC-21 lulus (semua `rel` lengkap).
 
-**Berkas mungkin berubah:** `housekeeper/src/products.js` (ubah), `housekeeper/src/ui/catalog.js` (ubah).
+**Berkas mungkin berubah:** `GoJan/src/products.js` (ubah), `GoJan/src/ui/catalog.js` (ubah).
 
 ### T-8.3 — Audit rahasia & dependensi `P0`
 
@@ -554,11 +554,11 @@ Tujuan: tidak ada jalur eksekusi skrip dari data produk dan tidak ada rahasia di
 - `npm audit` tanpa kerentanan high/critical; jumlah dependensi tetap minimal.
 
 **Kriteria penerimaan**
-- `grep` untuk `api_key`, `token`, `secret`, `password` di `housekeeper/` tidak menemukan nilai nyata.
+- `grep` untuk `api_key`, `token`, `secret`, `password` di `GoJan/` tidak menemukan nilai nyata.
 - `npm audit --omit=dev` bersih (tidak ada dependensi runtime).
 - Tidak ada berkas `.env` yang ter-commit; `.gitignore` memuat `node_modules` dan `dist`.
 
-**Berkas mungkin berubah:** `housekeeper/.gitignore` (ubah), `housekeeper/README.md` (ubah), `housekeeper/package.json` (ubah bila ada patch).
+**Berkas mungkin berubah:** `GoJan/.gitignore` (ubah), `GoJan/README.md` (ubah), `GoJan/package.json` (ubah bila ada patch).
 
 ### T-8.4 — Header & konfigurasi build yang aman `P1`
 
@@ -570,7 +570,7 @@ Tujuan: tidak ada jalur eksekusi skrip dari data produk dan tidak ada rahasia di
 - Tidak ada `<script src="http...">` di `index.html` hasil build.
 - Bila dipotong, tetap dicatat di README sebagai batasan.
 
-**Berkas mungkin berubah:** `housekeeper/vite.config.js` (ubah), `housekeeper/index.html` (ubah).
+**Berkas mungkin berubah:** `GoJan/vite.config.js` (ubah), `GoJan/index.html` (ubah).
 
 ---
 
@@ -589,7 +589,7 @@ Tujuan: build produksi sukses dan hasilnya berperilaku sama dengan dev.
 - Semua gambar dari `public/img/` tersalin ke `dist/img/`.
 - Tidak ada aset dengan path rusak (404) di tab Network saat `preview`.
 
-**Berkas mungkin berubah:** `housekeeper/vite.config.js` (ubah), `housekeeper/package.json` (ubah), `housekeeper/README.md` (ubah).
+**Berkas mungkin berubah:** `GoJan/vite.config.js` (ubah), `GoJan/package.json` (ubah), `GoJan/README.md` (ubah).
 
 ### T-9.2 — Smoke test build produksi `P0`
 
@@ -600,7 +600,7 @@ Tujuan: build produksi sukses dan hasilnya berperilaku sama dengan dev.
 - Tidak ada error konsol pada build produksi.
 - Hasil dicatat di `TESTING.md` dengan tanggal dan versi peramban.
 
-**Berkas mungkin berubah:** `housekeeper/TESTING.md` (ubah), `housekeeper/README.md` (ubah).
+**Berkas mungkin berubah:** `GoJan/TESTING.md` (ubah), `GoJan/README.md` (ubah).
 
 ---
 
@@ -616,7 +616,7 @@ Tujuan: build produksi sukses dan hasilnya berperilaku sama dengan dev.
 - Target hosting disetujui user sebelum konfigurasi diubah.
 - Tidak ada kredensial yang diminta untuk build lokal.
 
-**Berkas mungkin berubah:** `housekeeper/vite.config.js` (ubah), `housekeeper/README.md` (ubah).
+**Berkas mungkin berubah:** `GoJan/vite.config.js` (ubah), `GoJan/README.md` (ubah).
 
 ### T-10.2 — Konfigurasi `base` path
 
@@ -626,7 +626,7 @@ Tujuan: build produksi sukses dan hasilnya berperilaku sama dengan dev.
 - `npm run build` + `npm run preview` menampilkan gambar dan CSS tanpa 404.
 - Path `/img/...` pada data produk tetap benar setelah deploy (uji `imageUrl` absolut terhadap `base`).
 
-**Berkas mungkin berubah:** `housekeeper/vite.config.js` (ubah), `housekeeper/src/config.js` (ubah bila perlu `BASE_URL`).
+**Berkas mungkin berubah:** `GoJan/vite.config.js` (ubah), `GoJan/src/config.js` (ubah bila perlu `BASE_URL`).
 
 ### T-10.3 — Publikasi & verifikasi URL
 
@@ -637,7 +637,7 @@ Tujuan: build produksi sukses dan hasilnya berperilaku sama dengan dev.
 - Data tersimpan di peramban pengunjung (localStorage berfungsi pada HTTPS).
 - Tidak ada nomor WA asli/rahasia yang terekspos; nomor tetap placeholder atau nomor user.
 
-**Berkas mungkin berubah:** `housekeeper/README.md` (ubah), berkas konfigurasi hosting (baru).
+**Berkas mungkin berubah:** `GoJan/README.md` (ubah), berkas konfigurasi hosting (baru).
 
 ### T-10.4 — Dokumentasi rilis
 
@@ -648,7 +648,7 @@ Tujuan: build produksi sukses dan hasilnya berperilaku sama dengan dev.
 - README menyatakan nomor WA masih placeholder dan data hanya lokal.
 - Semua item P1 yang dipotong tercantum.
 
-**Berkas mungkin berubah:** `housekeeper/README.md` (ubah).
+**Berkas mungkin berubah:** `GoJan/README.md` (ubah).
 
 ---
 

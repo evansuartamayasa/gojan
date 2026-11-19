@@ -5,92 +5,197 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Housekeeper — katalog produk UMKM makanan dan minuman. Cari produk, cek stok, dan pesan lewat WhatsApp."
+      content="GoJan — katalog makanan dan minuman lokal pilihan. Lihat harga, stok, dan pesan langsung ke produsen lewat WhatsApp."
     />
-    <title>Housekeeper — Katalog Produk UMKM</title>
+    <title>GoJan — Rasa Lokal, Langsung dari Produsen</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Langsung ke konten utama</a>
 
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="#katalog">
-          <span class="brand-mark" aria-hidden="true">H</span>
-          <span>Housekeeper</span>
+        <a class="brand" href="#main" aria-label="GoJan — beranda">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+              <path
+                d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"
+                fill="currentColor"
+              />
+              <path
+                d="M6 18c3-4.5 6-7.5 10-9.5"
+                fill="none"
+                stroke="#FBF7F0"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </span>
+          <span>GoJan</span>
         </a>
 
-        <div class="tabs" role="tablist" aria-label="Mode aplikasi">
-          <button
-            class="tab"
-            type="button"
-            role="tab"
-            id="tab-katalog"
-            aria-controls="panel-katalog"
-            aria-selected="true"
-            tabindex="0"
-          >
-            Katalog
-          </button>
-          <button
-            class="tab"
-            type="button"
-            role="tab"
-            id="tab-dashboard"
-            aria-controls="panel-dashboard"
-            aria-selected="false"
-            tabindex="-1"
-          >
-            Dashboard
-          </button>
-        </div>
+        <nav class="main-nav" aria-label="Navigasi utama">
+          <a href="#katalog">Katalog</a>
+          <a href="#kategori">Kategori</a>
+          <a href="#tentang">Tentang</a>
+        </nav>
+
+        <a class="btn btn--primary btn--small header-cta" href="#katalog">
+          Lihat katalog
+        </a>
       </div>
     </header>
 
-    <div id="storage-banner" class="banner" role="status" hidden></div>
-
     <main id="main">
-      <section
-        class="panel container"
-        id="panel-katalog"
-        role="tabpanel"
-        aria-labelledby="tab-katalog"
-        tabindex="0"
-      >
-        <p class="eyebrow">Katalog produk</p>
-        <h1>Produk UMKM pilihan</h1>
-        <p class="lede">
-          Makanan dan minuman rumahan dari tetangga sendiri. Cek harga dan stok,
-          lalu hubungi penjual lewat WhatsApp.
-        </p>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Dapur lokal, rasa Nusantara</p>
+            <h1 id="hero-title">
+              Rasa rumahan dari
+              <span class="hero-highlight">produsen lokal</span>, langsung ke
+              meja Anda.
+            </h1>
+            <p class="lede">
+              Kopi sangrai, sambal botol, camilan, sampai kue basah — dikurasi
+              dari usaha kecil di sekitar. Cek harga dan stok, lalu pesan
+              langsung lewat WhatsApp tanpa perlu mendaftar akun.
+            </p>
 
-        <div id="catalog-root" class="product-grid" aria-live="polite"></div>
+            <div class="hero-actions">
+              <a class="btn btn--primary" href="#katalog">
+                Jelajahi katalog
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+              <a class="btn btn--ghost" id="hero-wa-link" href="#" target="_blank" rel="noopener noreferrer">
+                Tanya via WhatsApp
+              </a>
+            </div>
+
+            <p class="hero-meta" id="hero-meta"></p>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-orbit" aria-hidden="true"></div>
+            <div id="hero-featured" class="hero-featured"></div>
+            <span class="hero-float hero-float--top" aria-hidden="true">
+              Langsung dari produsen
+            </span>
+            <span class="hero-float hero-float--bottom" aria-hidden="true">
+              Stok dicek tiap hari
+            </span>
+          </div>
+        </div>
       </section>
 
-      <section
-        class="panel container"
-        id="panel-dashboard"
-        role="tabpanel"
-        aria-labelledby="tab-dashboard"
-        tabindex="0"
-        hidden
-      >
-        <p class="demo-note">
-          <strong>Demo pengelola</strong> — data tersimpan di perangkat ini.
-        </p>
-        <h2>Ringkasan persediaan</h2>
+      <section class="catalog" id="katalog" aria-labelledby="catalog-title">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Katalog produk</p>
+            <h2 id="catalog-title">Pilihan dari dapur sekitar</h2>
+            <p class="section-lede">
+              Delapan produk contoh dengan empat kategori. Semua harga dalam
+              Rupiah dan stok mengikuti data terkini dari produsen.
+            </p>
+          </div>
 
-        <div id="dashboard-root"></div>
+          <div class="catalog-controls">
+            <label class="catalog-search">
+              <span>Cari produk</span>
+              <input
+                id="catalog-search"
+                type="search"
+                placeholder="Contoh: kopi robusta"
+                autocomplete="off"
+              />
+            </label>
+
+            <label class="catalog-sort">
+              <span>Urutkan</span>
+              <select id="catalog-sort">
+                <option value="default">Rekomendasi</option>
+                <option value="price-asc">Harga termurah</option>
+                <option value="price-desc">Harga termahal</option>
+                <option value="name-asc">Nama A–Z</option>
+              </select>
+            </label>
+          </div>
+
+          <div
+            class="category-filter"
+            id="kategori"
+            role="group"
+            aria-label="Filter kategori produk"
+          ></div>
+
+          <p class="result-count" id="catalog-count" aria-live="polite"></p>
+
+          <div id="catalog-root" class="product-grid"></div>
+        </div>
+      </section>
+
+      <section class="about" id="tentang" aria-labelledby="about-title">
+        <div class="container about-inner">
+          <div>
+            <p class="eyebrow">Tentang GoJan</p>
+            <h2 id="about-title">Katalog kecil untuk produk yang layak dikenal</h2>
+          </div>
+          <div class="about-copy">
+            <p>
+              GoJan menghubungkan tetangga dengan produsen makanan dan
+              minuman rumahan. Tidak ada keranjang atau pembayaran di sini:
+              pilih produk, lalu lanjutkan percakapan langsung dengan penjual
+              lewat WhatsApp.
+            </p>
+            <p class="about-note">
+              Situs ini adalah katalog demo. Nama produk bersifat fiktif dan
+              nomor WhatsApp masih berupa contoh.
+            </p>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="container">
-        <p>Housekeeper — latihan katalog produk UMKM tanpa backend.</p>
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <a class="brand brand--footer" href="#main">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+                <path
+                  d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            <span>GoJan</span>
+          </a>
+          <p>Rasa lokal, langsung dari produsen.</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Navigasi footer">
+          <a href="#katalog">Katalog</a>
+          <a href="#kategori">Kategori</a>
+          <a href="#tentang">Tentang</a>
+        </nav>
+
+        <p class="footer-note">Katalog demo · dibuat tanpa aset berhak cipta.</p>
       </div>
     </footer>
-
-    <div id="dialog-root"></div>
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script type="module" src="/src/main.js"></script>
   </body>

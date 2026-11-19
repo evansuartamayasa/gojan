@@ -1,13 +1,14 @@
 {
-  "name": "housekeeper",
+  "name": "gojan",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Katalog produk UMKM Housekeeper — Vite + JavaScript vanilla",
+  "description": "Katalog produk UMKM GoJan — Vite + JavaScript vanilla",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test"
   },
   "devDependencies": {
     "vite": "^8.3.8"

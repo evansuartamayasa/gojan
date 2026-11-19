@@ -6,8 +6,8 @@
 import { SEED_PRODUCTS, normalizeProduct, validateProduct } from './products.js';
 
 export const STORAGE_KEYS = {
-  products: 'housekeeper:v1:products',
-  schema: 'housekeeper:v1:schema',
+  products: 'gojan:v1:products',
+  schema: 'gojan:v1:schema',
 };
 
 export const SCHEMA_VERSION = '1';
